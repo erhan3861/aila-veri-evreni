@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Giriş · Demo Koleji AI</title>
+  <meta name="description" content="Okulunuzun yapay zekâ platformuna giriş yapın, yarışmaya katılın ya da bilgi talep edin." />
+  <meta name="robots" content="noindex" />
+  <meta name="theme-color" content="#160d14" />
+  <link rel="icon" type="image/png" href="assets/aila-mark.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&family=Sora:wght@300;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="v2/login.css" />
+  <script type="module" src="v2/login.js"></script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.06 12.35a1 1 0 0 1 0-.7 10.75 10.75 0 0 1 19.88 0 1 1 0 0 1 0 .7 10.75 10.75 0 0 1-19.88 0"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c4.97 0 8.96 3.18 9.94 6.65a1 1 0 0 1 0 .7 10.75 10.75 0 0 1-1.62 2.93"/><path d="M14.08 14.16a3 3 0 0 1-4.24-4.24"/><path d="M17.48 17.5A10.75 10.75 0 0 1 2.06 12.35a1 1 0 0 1 0-.7 10.75 10.75 0 0 1 4.45-5.14"/><path d="m2 2 20 20"/></symbol>
+  <symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-building" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></symbol>
+</svg>
+
+<canvas class="sky" data-canvas aria-hidden="true"></canvas>
+
+<main class="page">
+  <!-- sol: okulun yapay zekâsı -->
+  <section class="intro" aria-labelledby="h-intro">
+    <h1 id="h-intro"><span data-school>Demo Koleji</span><span class="h1-sub">Yapay Zekâ Evreni</span></h1>
+    <!-- yapay zekâ evreni: beyin ve cam monogram bu alanın ölçüsüne göre yerleşir (3B sahne tam ekran tuvalde) -->
+    <div class="stage-slot" data-stage aria-hidden="true"></div>
+  </section>
+
+  <!-- sağ: üç giriş -->
+  <section class="panel" aria-label="Giriş seçenekleri">
+    <header class="school">
+      <span class="crest" data-initial>D</span>
+      <span class="school-name"><strong><span data-school>Demo Koleji</span> AI</strong></span>
+    </header>
+
+    <div class="tabs" role="tablist" aria-label="Ne yapmak istiyorsunuz?" data-tabs>
+      <span class="tab-ind" aria-hidden="true"></span>
+      <button type="button" role="tab" id="t-giris" aria-controls="p-giris" aria-selected="true">Giriş Yap</button>
+      <button type="button" role="tab" id="t-yarisma" aria-controls="p-yarisma" aria-selected="false" tabindex="-1">Yarışmaya Katıl</button>
+      <button type="button" role="tab" id="t-form" aria-controls="p-form" aria-selected="false" tabindex="-1">Form Doldur</button>
+    </div>
+
+    <!-- 1 · giriş -->
+    <form class="pane" role="tabpanel" id="p-giris" aria-labelledby="t-giris" novalidate data-form="giris">
+      <div class="f">
+        <label for="g-kullanici">E-posta ya da kullanıcı adı</label>
+        <input id="g-kullanici" name="kullanici" class="field" type="text" autocomplete="username" required aria-describedby="e-kullanici" />
+        <p class="err" id="e-kullanici"></p>
+      </div>
+      <div class="f">
+        <div class="f-label"><label for="g-sifre">Şifre</label><a class="link" href="#sifremi-unuttum">Şifremi unuttum</a></div>
+        <div class="pw">
+          <input id="g-sifre" name="sifre" class="field" type="password" autocomplete="current-password" required aria-describedby="e-sifre" />
+          <button type="button" class="pw-toggle" data-pw aria-label="Şifreyi göster" aria-pressed="false"><svg class="icon"><use href="#i-eye" /></svg></button>
+        </div>
+        <p class="err" id="e-sifre"></p>
+      </div>
+      <label class="check"><input type="checkbox" name="hatirla" /><span>Beni hatırla</span></label>
+      <button type="submit" class="btn btn-primary">Giriş Yap<svg class="icon" aria-hidden="true"><use href="#i-arrow-right" /></svg></button>
+      <button type="button" class="text-btn" data-sso>Okul hesabıyla giriş</button>
+      <p class="status" role="status" data-status></p>
+    </form>
+
+    <!-- 2 · yarışma -->
+    <form class="pane" role="tabpanel" id="p-yarisma" aria-labelledby="t-yarisma" novalidate data-form="yarisma" hidden>
+      <div class="f">
+        <label for="y-kod">Aktivasyon kodu</label>
+        <input id="y-kod" name="kod" class="field code" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="OKUL-2026-K4F" required aria-describedby="e-kod" />
+        <p class="err" id="e-kod"></p>
+      </div>
+      <div class="f">
+        <label for="y-ad">Öğrencinin adı soyadı</label>
+        <input id="y-ad" name="ad" class="field" type="text" autocomplete="name" required aria-describedby="e-ad" />
+        <p class="err" id="e-ad"></p>
+      </div>
+      <button type="submit" class="btn btn-primary">Devam Et<svg class="icon" aria-hidden="true"><use href="#i-arrow-right" /></svg></button>
+      <p class="note">Katılmak için pazarlama izni vermeniz gerekmez. Velinizin onayını bir sonraki adımda isteriz.</p>
+      <p class="status" role="status" data-status></p>
+    </form>
+
+    <!-- 3 · bilgi formu -->
+    <form class="pane" role="tabpanel" id="p-form" aria-labelledby="t-form" novalidate data-form="form" hidden>
+      <div class="f">
+        <label for="b-ad">Veli adı soyadı</label>
+        <input id="b-ad" name="veli" class="field" type="text" autocomplete="name" required aria-describedby="e-veli" />
+        <p class="err" id="e-veli"></p>
+      </div>
+      <div class="f-row">
+        <div class="f">
+          <label for="b-tel">Telefon</label>
+          <input id="b-tel" name="tel" class="field" type="tel" inputmode="tel" autocomplete="tel" placeholder="05XX XXX XX XX" required aria-describedby="e-tel" />
+          <p class="err" id="e-tel"></p>
+        </div>
+        <div class="f">
+          <label for="b-sinif">Öğrencinin sınıfı</label>
+          <select id="b-sinif" name="sinif" class="field" required aria-describedby="e-sinif">
+            <option value="" disabled selected>Seçiniz</option>
+            <option>Anaokulu</option><option>İlkokul</option><option>Ortaokul</option><option>Lise</option>
+          </select>
+          <p class="err" id="e-sinif"></p>
+        </div>
+      </div>
+      <label class="check"><input type="checkbox" name="onay" required aria-describedby="e-onay" /><span><a class="link" href="#aydinlatma">Aydınlatma metnini</a> okudum.</span></label>
+      <p class="err" id="e-onay"></p>
+      <label class="check"><input type="checkbox" name="ticari" /><span>Okulun duyurularını almak istiyorum <em>(isteğe bağlı)</em></span></label>
+      <button type="submit" class="btn btn-primary">Talep Gönder<svg class="icon" aria-hidden="true"><use href="#i-arrow-right" /></svg></button>
+      <p class="status" role="status" data-status></p>
+    </form>
+
+    <footer class="powered"><img src="assets/aila-mark.png" alt="" width="18" height="18" /><span><b>AI-LA</b> altyapısıyla</span></footer>
+  </section>
+</main>
+</body>
+</html>
