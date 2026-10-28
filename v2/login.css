@@ -2,7 +2,7 @@
    Okul rengi JS'ten: --s (ana), --s2 (açık eşi), --bg (okul tonunda gece). */
 
 :root {
-  --s: #b01e32; --s2: #f08a7e; --bg: #160d14;
+  --s: #345de0; --s2: #8fa6ff; --bg: #0d1023;   /* varsayılan mavi; JS okul rengini yazar */
   --ink: #f3f4fb; --ink-2: #c9cce0; --ink-3: #9a9fbd;
   --line: rgba(255, 255, 255, .12); --line-2: rgba(255, 255, 255, .22);
   --field: rgba(255, 255, 255, .055);

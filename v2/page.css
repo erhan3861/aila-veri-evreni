@@ -3,8 +3,8 @@
    (Sora + Inter, okul rengi). Hareket: aila_site/HAREKET_STRATEJISI.md §3 — iki eğri, 0,4 s birim. */
 
 :root {
-  --s: #5049dc;            /* okul rengi (evren) — JS yazar */
-  --s2: #a6aefb;           /* açık eşi */
+  --s: #345de0;            /* okul rengi (evren), varsayılan mavi — JS yazar */
+  --s2: #8fa6ff;           /* açık eşi */
   --bg: #0b0a1c;           /* evren zemini, okul tonunda — JS yazar */
   --ink: #f3f4fb;
   --ink-2: #c9cce0;        /* gövde, koyu zeminde 10:1 */

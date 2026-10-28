@@ -50,14 +50,14 @@ const applyName = () => {
 };
 
 const THEMES = {
-  aila: { c: "#5049dc", c2: "#a6aefb", name: "AI-LA" },
-  bordo: { c: "#b01e32", c2: "#f08a7e", name: "Bordo" },
   mavi: { c: "#345de0", c2: "#8fa6ff", name: "Mavi" },
   turkuaz: { c: "#008978", c2: "#5fd3c0", name: "Turkuaz" },
   mor: { c: "#914db8", c2: "#d99bf0", name: "Mor" },
   turuncu: { c: "#c9582b", c2: "#ffb27a", name: "Turuncu" },
+  deniz: { c: "#1e8a5a", c2: "#74d9a9", name: "Deniz yeşili" },
 };
-let col = { c: hexToOklch(THEMES.aila.c), c2: hexToOklch(THEMES.aila.c2) };
+// varsayılan mavi ve ilk karede mavi: açılışta otomatik renk geçişi yok, renk yalnız kullanıcı seçince değişir
+let col = { c: hexToOklch(THEMES.mavi.c), c2: hexToOklch(THEMES.mavi.c2) };
 let colorAnim = 0, uni = null;
 
 const paintColors = () => {
@@ -316,8 +316,9 @@ narrowMQ.addEventListener("change", () => location.reload()); // parçacık say�
 const showCarousel = () => document.documentElement.classList.add("carousel-in");
 const intro = () => {
   applyName();
+  $('input[value="mavi"]').checked = true;
   paintColors();
-  if (reduce) { nameInput.value = "Demo Koleji"; applyName(); $('input[value="bordo"]').checked = true; colorTo("bordo"); showCarousel(); return; }
+  if (reduce) { nameInput.value = "Demo Koleji"; applyName(); showCarousel(); return; }
   setTimeout(() => {
     if (userTook) { showCarousel(); return; }
     const text = "Demo Koleji";
@@ -327,10 +328,7 @@ const intro = () => {
       applyName();
       if (i >= text.length) {
         clearInterval(typing);
-        setTimeout(() => {
-          if (!$('input[name="renk"]:checked')) { $('input[value="bordo"]').checked = true; colorTo("bordo"); }
-          showCarousel();
-        }, 300);
+        setTimeout(showCarousel, 300);
       }
     }, 70);
   }, 900);
