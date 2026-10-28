@@ -97,7 +97,6 @@ const sticky = $(".u-sticky");
 const canvas = $("[data-canvas]");
 const labelsEl = $("[data-labels]");
 const phases = Object.fromEntries($$("[data-phase]").map((el) => [el.dataset.phase, el]));
-const cards = $$("[data-card]");
 const steps = $$(".u-steps [data-step]");
 const cue = $("[data-cue]");
 const narrowMQ = matchMedia("(max-width: 899px)");
@@ -125,11 +124,8 @@ const layoutFor = (w, h) => {
 };
 
 let W = 0, H = 0;
-let copyRight = 0;
 const resize = () => {
   W = sticky.clientWidth; H = sticky.clientHeight;
-  const hc = $(".hero-copy").getBoundingClientRect();
-  copyRight = hc.right;
   if (!uni) return;
   uni.size(W, H);
   uni.build(layoutFor(W, H));
@@ -138,7 +134,7 @@ const resize = () => {
 /* ---------- 3B etiketleri ---------- */
 const el = (tag, cls, html) => { const e = document.createElement(tag); e.className = cls; if (html) e.innerHTML = html; labelsEl.appendChild(e); return e; };
 const prodLabels = PRODUCTS.map((p) => el("div", `lbl lbl-prod${p.mono ? " mono" : ""}${p.tall ? " tall" : ""}`,
-  `<span class="logo">${p.mark ? `<span class="tc"><img src="${p.logo}" alt="">${p.name}</span>` : `<img src="${p.logo}" alt="${p.name}">`}</span><p>${p.desc}</p>${p.plus ? '<span class="plus">+1</span>' : ""}`));
+  `<span class="logo">${p.mark ? `<span class="tc"><img src="${p.logo}" alt="">${p.name}</span>` : `<img src="${p.logo}" alt="${p.name}">`}</span><p>${p.desc}</p>${p.isNew ? '<span class="plus">Yeni</span>' : ""}`));
 const coreLabel = el("div", "lbl lbl-core", `<span class="core-disc"><img src="assets/aila-mark.png" alt="" width="52" height="52"></span><small>Tek oturum</small>`);
 const hubLabels = AREAS.map((a, i) => {
   const e = el("div", "lbl lbl-hub", `<span class="glyph ${a.shape}"></span><b>${a.short}</b><span class="val">0</span><span class="bar"><i></i></span><span class="gap">Gelişim alanı</span>`);
@@ -240,7 +236,6 @@ const readTarget = () => {
   const r = universeEl.getBoundingClientRect();
   target = clamp01(-r.top / (r.height - innerHeight));
 };
-let introT0 = 0, introCards = reduce ? 1 : 0;
 
 const frame = (now) => {
   raf = 0;
@@ -255,7 +250,6 @@ const frame = (now) => {
   pointer.sx += (pointer.x - pointer.sx) * (1 - Math.exp(-dt * 3));
   pointer.sy += (pointer.y - pointer.sy) * (1 - Math.exp(-dt * 3));
   if (!reduce) spin += dt * (1 - e * 0.85);
-  if (introT0) introCards = easeOut(clamp01((now - introT0) / 900));
 
   // katmanlar
   const oHero = 1 - smooth(seg(p, 0.04, 0.15));
@@ -276,26 +270,6 @@ const frame = (now) => {
   if (uni && uni.anchors) {
     uni.render(now / 1000, { e, k, spin, px: pointer.sx, py: pointer.sy });
     const A = uni.anchors;
-    // rol kartları: eğik galaksi düzleminde yörünge; arkaya geçen sönükleşir
-    const base = reduce ? 0.6 : now / 46000 * Math.PI * 2;
-    cards.forEach((card, i) => {
-      const a = base + (i * Math.PI * 2) / 3;
-      const R = (narrowMQ.matches ? 0.74 : 1.12) * (0.35 + 0.65 * introCards); // dar ekranda kartlar kenardan taşmasın
-      const wp = uni.galPoint(Math.cos(a) * R, Math.sin(a) * R);
-      const s = uni.project(wp, W, H);
-      const depth = Math.sin(a + 0.5);               // galaksi eğimine göre ön/arka
-      const sc = (0.84 + 0.16 * (depth + 1) / 2) * (0.7 + 0.3 * introCards);
-      // kart metne binmesin: masaüstünde metin sütununun sağında, dar ekranda ekranın içinde
-      const half = card.offsetWidth / 2;
-      const minX = narrowMQ.matches ? half + 8 : copyRight + half + 24;
-      const x = Math.min(W - half - 8, Math.max(minX, s.x));
-      card.style.transform = `translate3d(${(x - half).toFixed(1)}px, ${(s.y - card.offsetHeight / 2).toFixed(1)}px, 0) scale(${sc.toFixed(3)})`;
-      // arkadaki kart saydamlaşınca griye dönüyordu: opak kalır, ışığı kısılır
-      card.style.opacity = (introCards * oHero).toFixed(3);
-      card.style.filter = `brightness(${(0.45 + 0.55 * (depth + 1) / 2).toFixed(3)})`;
-      card.style.zIndex = depth > 0 ? 3 : 1;
-    });
-
     // ürünler: ekosistemde tam etiket, grafikte yalnız logo
     const ke = smooth(clamp01((k - 0.15) / 0.75));
     labelsEl.classList.toggle("is-graph", k > 0.5);
@@ -338,12 +312,14 @@ addEventListener("resize", () => { clearTimeout(resize.t); resize.t = setTimeout
 narrowMQ.addEventListener("change", () => location.reload()); // parçacık sayısı değişir
 
 /* ---------- açılış ---------- */
+// karusel, okul adı yazılıp renk oturduktan sonra yükselerek gelir (önceden yörüngedeki rol kartları)
+const showCarousel = () => document.documentElement.classList.add("carousel-in");
 const intro = () => {
   applyName();
   paintColors();
-  if (reduce) { nameInput.value = "Demo Koleji"; applyName(); $('input[value="bordo"]').checked = true; colorTo("bordo"); return; }
+  if (reduce) { nameInput.value = "Demo Koleji"; applyName(); $('input[value="bordo"]').checked = true; colorTo("bordo"); showCarousel(); return; }
   setTimeout(() => {
-    if (userTook) { introT0 = performance.now(); return; }
+    if (userTook) { showCarousel(); return; }
     const text = "Demo Koleji";
     let i = 0;
     typing = setInterval(() => {
@@ -353,7 +329,7 @@ const intro = () => {
         clearInterval(typing);
         setTimeout(() => {
           if (!$('input[name="renk"]:checked')) { $('input[value="bordo"]').checked = true; colorTo("bordo"); }
-          introT0 = performance.now();
+          showCarousel();
         }, 300);
       }
     }, 70);

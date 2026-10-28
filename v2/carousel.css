@@ -1,0 +1,58 @@
+/* Ekosistem karuseli (index.html ve veri evreni sayfası ortak).
+   Ön kart etkin, sonraki iki kart arkasından görünür; altta ilerleme çubuklu ürün sekmeleri. */
+.pc { --pc-ease: cubic-bezier(.22, 1, .36, 1); --pc-ink: #f3f4fb; --pc-mute: #a6abc8; position: relative; width: 100%; }
+.pc-stage { position: relative; aspect-ratio: 16 / 10; }
+.pc-slide {
+  position: absolute; inset: 0; margin: 0; border-radius: 22px; overflow: hidden; background: #0e0c1f;
+  box-shadow: 0 30px 70px -30px rgba(0, 0, 0, .75), 0 0 0 1px rgba(255, 255, 255, .08);
+  transform-origin: 50% 0; will-change: transform, opacity;
+  transition: transform .8s var(--pc-ease), opacity .8s var(--pc-ease), filter .8s var(--pc-ease);
+}
+.pc-slide img.pc-img { display: block; width: 100%; height: 100%; object-fit: cover; }
+/* deste: 0 = önde, 1-2 = arkada sağ-yukarıda, gerisi gizli */
+.pc-slide[data-pos="0"] { transform: none; opacity: 1; z-index: 3; }
+.pc-slide[data-pos="1"] { transform: translate(5%, -6%) scale(.9); opacity: .55; z-index: 2; filter: brightness(.7); }
+.pc-slide[data-pos="2"] { transform: translate(9%, -11%) scale(.8); opacity: .25; z-index: 1; filter: brightness(.55); }
+.pc-slide[data-pos="out"] { transform: translate(-6%, 4%) scale(1.02); opacity: 0; z-index: 4; pointer-events: none; }
+.pc-slide[data-pos="hidden"] { transform: translate(12%, -15%) scale(.72); opacity: 0; z-index: 0; }
+.pc-slide figcaption {
+  position: absolute; left: 14px; bottom: 14px; right: 14px; display: flex; align-items: center; gap: 12px;
+  padding: 10px 14px 10px 10px; border-radius: 14px; background: rgba(255, 255, 255, .94); color: #10122c;
+  font: 500 14px/1.35 "Inter", system-ui, sans-serif; box-shadow: 0 10px 30px -12px rgba(0, 0, 0, .5);
+}
+.pc-slide figcaption .pc-logo { height: 24px; width: auto; max-width: 120px; flex: none; }
+.pc-slide figcaption .pc-logo.mono { filter: brightness(0); }
+.pc-slide figcaption .pc-tc { display: flex; align-items: center; gap: 6px; flex: none; font: 800 13px/1 "Sora", sans-serif; }
+.pc-slide figcaption .pc-tc img { height: 22px; }
+.pc-slide figcaption .pc-new { margin-left: auto; padding: 3px 8px; border-radius: 999px; background: #e7fbf4; color: #0b6b50; font-size: 11.5px; font-weight: 700; white-space: nowrap; }
+
+.pc-ctrl { display: flex; align-items: center; gap: 8px; margin-top: 16px; }
+.pc:not(.pc-light) .pc-ctrl { padding: 6px; border-radius: 16px; background: rgba(8, 6, 18, .55); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.pc-tabs { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 6px; flex: 1; }
+.pc-tab { position: relative; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-height: 40px; padding: 8px 2px 10px; border: 0; background: none; color: var(--pc-mute); font: 600 12.5px/1.2 "Inter", system-ui, sans-serif; cursor: pointer; text-align: left; transition: color .3s; }
+.pc-tab::before, .pc-tab::after { content: ""; position: absolute; left: 0; right: 4px; top: 0; height: 2px; border-radius: 2px; background: rgba(255, 255, 255, .16); }
+.pc-tab::after { background: var(--pc-ink); transform-origin: left; transform: scaleX(0); }
+.pc-tab[aria-selected="true"] { color: var(--pc-ink); }
+.pc-tab[aria-selected="true"]::after { transform: scaleX(var(--p, 0)); }
+.pc-tab:hover { color: var(--pc-ink); }
+.pc-btn { display: grid; place-items: center; flex: none; width: 40px; height: 40px; border: 1px solid rgba(255, 255, 255, .18); border-radius: 12px; background: rgba(255, 255, 255, .04); color: var(--pc-ink); cursor: pointer; transition: background-color .2s, border-color .2s; }
+.pc-btn:hover { background: rgba(255, 255, 255, .1); border-color: rgba(255, 255, 255, .35); }
+.pc-btn svg { width: 16px; height: 16px; }
+.pc :focus-visible { outline: 2px solid #fff; outline-offset: 2px; border-radius: 8px; }
+
+/* açık zeminde (index.html) */
+.pc.pc-light { --pc-ink: #10122c; --pc-mute: #5f6680; }
+.pc.pc-light .pc-tab::before { background: #e3e6f2; }
+.pc.pc-light .pc-btn { border-color: #d9dcea; background: #fff; }
+.pc.pc-light .pc-btn:hover { border-color: #a6aefb; background: #f6f7fc; }
+.pc.pc-light :focus-visible { outline-color: #5049dc; }
+
+@media (max-width: 599px) {
+  .pc-tab { font-size: 0; min-height: 24px; padding: 0; }          /* dar ekranda yalnız ilerleme çizgileri */
+  .pc-slide figcaption { font-size: 12.5px; padding: 8px 10px 8px 8px; }
+  .pc-slide figcaption .pc-logo { height: 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pc-slide { transition: opacity .2s linear; }
+  .pc-slide[data-pos="1"], .pc-slide[data-pos="2"], .pc-slide[data-pos="out"], .pc-slide[data-pos="hidden"] { transform: none; opacity: 0; }
+}

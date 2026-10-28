@@ -89,7 +89,7 @@ button { font: inherit; color: inherit; }
 .u-labels { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
 .phase { position: absolute; inset: 0; z-index: 4; pointer-events: none; opacity: 0; visibility: hidden; }
 .phase.is-on { visibility: visible; }
-.phase.is-on .hero-copy, .phase.is-on .g-copy, .phase.is-on .phase-eco-in, .phase-eco.is-on > * { pointer-events: auto; }
+.phase.is-on .hero-copy, .phase.is-on .hero-carousel, .phase.is-on .g-copy, .phase.is-on .phase-eco-in, .phase-eco.is-on > * { pointer-events: auto; }
 
 .eyebrow { font: 600 12px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--s2); }
 .lede { color: var(--ink-2); font-size: clamp(16px, .5vw + 13px, 19px); line-height: 1.6; }
@@ -121,27 +121,13 @@ h1 { font-size: clamp(2.5rem, .9rem + 3.6vw, 4.5rem); font-weight: 800; letter-s
 .hint { font-size: 13px; color: var(--ink-3); }
 .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
 
-.cards { position: absolute; inset: 0; pointer-events: none; }
-.card {
-  position: absolute; left: 0; top: 0; width: 244px; padding: 13px 15px 11px; border-radius: 16px;
-  background: rgba(255, 255, 255, .95); color: #10122c; font-size: 12.5px; line-height: 1.45;
-  box-shadow: 0 1px 0 rgba(255, 255, 255, .7) inset, 0 24px 50px -22px rgba(0, 0, 0, .7);
-  will-change: transform, opacity;
-}
-.card header { display: flex; align-items: center; gap: 10px; margin-bottom: 9px; }
-.card header > span { display: grid; min-width: 0; font: 700 13px/1.2 var(--display); }
-.card header strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.card header i { font-style: normal; }
-.card header small { font: 600 10px/1.4 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: #6b7090; }
 .badge { display: grid; place-items: center; flex: none; width: 30px; height: 30px; border-radius: 9px; background: var(--s); color: #fff; font: 800 14px/1 var(--display); }
-.card mark { background: color-mix(in oklch, var(--s2) 35%, #fff); color: inherit; border-radius: 4px; padding: 0 3px; }
-.meter { height: 5px; margin-top: 10px; border-radius: 99px; background: #eceef6; overflow: hidden; }
-.meter i { display: block; height: 100%; width: calc(var(--v) * 1%); border-radius: inherit; background: var(--s); }
-.card .tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 9px; }
-.card .tags span { padding: 3px 8px; border-radius: 999px; background: color-mix(in oklch, var(--s2) 25%, #fff); color: color-mix(in oklch, var(--s) 75%, #000); font-size: 11px; font-weight: 600; }
-.mini-bars { display: flex; align-items: end; gap: 5px; height: 32px; margin-top: 9px; }
-.mini-bars i { flex: 1; height: calc(var(--v) * 1%); border-radius: 4px 4px 2px 2px; background: color-mix(in oklch, var(--s) calc(var(--v) * 1%), #e4e6f2); }
-.card footer { margin-top: 9px; padding-top: 8px; border-top: 1px solid #eceef6; font: 500 10.5px/1.3 var(--mono); color: #6b7090; }
+
+/* ekosistem karuseli: galaksinin önünde, metnin sağında; okul adı yazılınca yükselerek gelir */
+/* konum sarmalayıcıda: karusel bileşeni kendi kökünü position: relative yapar */
+.hero-carousel { position: absolute; right: clamp(48px, 6vw, 110px); top: 50%; width: min(560px, 40vw); transform: translateY(-44%);
+  opacity: 0; translate: 0 24px; transition: opacity .8s var(--m-out), translate .8s var(--m-out); }
+.carousel-in .hero-carousel { opacity: 1; translate: 0 0; }
 
 /* ---- 2 · ekosistem ---- */
 .phase-eco { display: grid; justify-items: center; align-content: start; padding-top: max(96px, 11vh); text-align: center; }
@@ -432,9 +418,7 @@ h1 { font-size: clamp(2.5rem, .9rem + 3.6vw, 4.5rem); font-weight: 800; letter-s
   .domain { margin-bottom: 14px; }
   .studio { margin-top: 16px; }
   .actions { margin-top: 16px; }
-  .card { width: 176px; padding: 10px 11px 9px; font-size: 11.5px; }
-  .card .msg { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-  .card .tags, .card .mini-bars, .card footer { display: none; }
+  .hero-carousel { left: 20px; right: 20px; top: auto; bottom: 64px; width: auto; transform: none; }
   .phase-eco { padding-top: 92px; padding-inline: 20px; }
   .phase-eco .lede { display: none; }
   .checks li { font-size: 10.5px; padding: 6px 9px; }

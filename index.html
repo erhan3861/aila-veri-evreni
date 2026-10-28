@@ -12,7 +12,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="v2/page.css" />
+  <link rel="stylesheet" href="v2/carousel.css" />
   <script type="module" src="v2/page.js"></script>
+  <script type="module" src="v2/carousel.js"></script>
 </head>
 <body>
 <a class="skip" href="#okul-sayfasi">İçeriğe geç</a>
@@ -106,26 +108,8 @@
         </div>
       </div>
 
-      <div class="cards" aria-hidden="true">
-        <article class="card" data-card>
-          <header><b class="badge" data-initial>O</b><span><strong><i data-school>Okulunuz</i> AI</strong><small>Öğrenci</small></span></header>
-          <p class="msg">Fotosentez özetin hazır. Eksik kaldığın yer: <mark>ışık tepkimeleri</mark>.</p>
-          <div class="meter"><i style="--v:72"></i></div>
-          <footer>Bugünkü görevler · 3 / 4</footer>
-        </article>
-        <article class="card" data-card>
-          <header><b class="badge" data-initial>O</b><span><strong><i data-school>Okulunuz</i> AI</strong><small>Öğretmen</small></span></header>
-          <p class="msg">7-A Fen için 40 dakikalık ders planı ve 10 soruluk karma sınav hazırlandı.</p>
-          <div class="tags"><span>Ders planı</span><span>Sınav</span><span>Whiteboard</span></div>
-          <footer>Sınıf · 28 öğrenci</footer>
-        </article>
-        <article class="card" data-card>
-          <header><b class="badge" data-initial>O</b><span><strong><i data-school>Okulunuz</i> AI</strong><small>Yönetici</small></span></header>
-          <p class="msg">Bu hafta <b>+12</b> veli talebi geldi, hepsi aydınlatma onaylı.</p>
-          <div class="mini-bars"><i style="--v:40"></i><i style="--v:62"></i><i style="--v:55"></i><i style="--v:80"></i><i style="--v:92"></i></div>
-          <footer>Mini CRM · KVKK uyumlu</footer>
-        </article>
-      </div>
+      <!-- ekosistemden kareler (v2/carousel.js); önceden galaksinin etrafında dönen rol kartları -->
+      <div class="hero-carousel"><div data-carousel aria-label="Ekosistemden kareler"></div></div>
     </div>
 
     <!-- 2 · ekosistem -->
@@ -376,7 +360,7 @@
         </details>
         <details name="sss">
           <summary>AI-LA ekosisteminde hangi eğitim platformları bulunur?<svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg></summary>
-          <p>AI-LA ekosistemi farklı öğrenme ihtiyaçlarına yönelik uzmanlaşmış çözümler sunar. Talent14 dijital beceri ve teknoloji eğitimine, AI-GALAXY yapay zekâ okuryazarlığına, Codemino kodlama becerilerine, Okumino hızlı okuma çalışmalarına ve TalentCup öğrenci yarışmalarına odaklanır. Kurumlar ihtiyaç duydukları hizmetleri seçerek kendi ekosistemlerini oluşturabilir.</p>
+          <p>AI-LA ekosistemi farklı öğrenme ihtiyaçlarına yönelik uzmanlaşmış çözümler sunar. Talent14 dijital beceri ve teknoloji eğitimine, AI-GALAXY yapay zekâ okuryazarlığına, Codemino kodlama becerilerine, Okumino hızlı okuma çalışmalarına, TalentCup öğrenci yarışmalarına ve Dersmino kazanıma göre etkileşimli derslere odaklanır. Kurumlar ihtiyaç duydukları hizmetleri seçerek kendi ekosistemlerini oluşturabilir.</p>
         </details>
         <details name="sss">
           <summary>Okulumuz AI-LA üzerinden kendi yarışmalarını düzenleyebilir mi?<svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg></summary>

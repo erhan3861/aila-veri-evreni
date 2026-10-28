@@ -7,7 +7,7 @@ export const PRODUCTS = [
   { id: "codemino", name: "Codemino", logo: "assets/codemino-logo.png", tall: true, desc: "Kodlama becerileri" },
   { id: "tc", name: "TALENT CUP", logo: "assets/talentcup-mark.png", desc: "Öğrenci yarışmaları ve projeler", mark: true },
   { id: "aig", name: "AI-GALAXY", logo: "assets/ai-galaxy.png", desc: "Yapay zekâ okuryazarlığı", mono: true },
-  { id: "genwi", name: "genwi", logo: "assets/genwi.webp", desc: "Görsel, video ve ses stüdyosu", mono: true, plus: true },
+  { id: "dersmino", name: "Dersmino", logo: "assets/dersmino-logo.png", desc: "Kazanıma göre etkileşimli dersler", isNew: true },
 ];
 
 // Altı yetkinlik alanı = rapordaki altı çubuk. Her alanın 2-3 alt becerisi grafikte yaprak düğümdür.
@@ -28,7 +28,7 @@ export const FLOWS = [
   ["codemino", "akis"], ["codemino", "olcme"],
   ["tc", "isbirligi"], ["tc", "gorsel"],
   ["aig", "arastirma"], ["aig", "gorsel"],
-  ["genwi", "gorsel"],
+  ["dersmino", "arastirma"], ["dersmino", "olcme"],
 ];
 
 export const STUDENTS = [
@@ -50,7 +50,7 @@ export const STUDENTS = [
     events: [
       ["okumino", "okuma", 2, "Çıkarım testi tamamlandı"],
       ["t14", "akis", 1, "Akış görevi 3/4 adım"],
-      ["genwi", "gorsel", 1, "Görsel hikâye paylaşıldı"],
+      ["dersmino", "olcme", 1, "Fotosentez dersi: ara sorular tamam"],
       ["codemino", "olcme", 2, "Hata ayıklama görevinde öz değerlendirme"],
       ["tc", "isbirligi", 1, "Takım projesine katkı"],
       ["aig", "arastirma", 1, "Modül 4: Kaynak doğrulama"],
@@ -74,7 +74,7 @@ export const STUDENTS = [
       ["codemino", "akis", 1, "Döngüler modülü tamamlandı"],
       ["tc", "isbirligi", 2, "Takım toplantısına katıldı"],
       ["t14", "olcme", 1, "Haftalık değerlendirme"],
-      ["genwi", "gorsel", 2, "İlk video taslağı"],
+      ["dersmino", "arastirma", 2, "Kimya dersi: deney adımı tamamlandı"],
       ["okumino", "okuma", 1, "Okuma hızı +18 kelime/dk"],
     ],
   },
@@ -96,7 +96,7 @@ export const STUDENTS = [
       ["aig", "arastirma", 1, "Modül 2: Yapay zekâ nedir?"],
       ["okumino", "okuma", 2, "Ana fikir alıştırması"],
       ["tc", "isbirligi", 1, "Sınıf yarışmasına katıldı"],
-      ["genwi", "gorsel", 1, "Masal karakteri çizdi"],
+      ["dersmino", "olcme", 1, "Kesirler dersi: mini sınav"],
     ],
   },
 ];
