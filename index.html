@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI-LA · Okulunuzun kendi yapay zekâsı</title>
+  <meta name="description" content="Okulunuzun markasıyla çalışan yapay zekâ ekosistemi: bağlı platformlardan gelen veriyle her öğrencinin beceri haritası." />
+  <meta name="robots" content="noindex" />
+  <meta name="theme-color" content="#0b0a1c" />
+  <link rel="icon" type="image/png" href="assets/aila-mark.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="v2/page.css" />
+  <script type="module" src="v2/page.js"></script>
+</head>
+<body>
+<a class="skip" href="#okul-sayfasi">İçeriğe geç</a>
+<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+<symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></symbol>
+<symbol id="i-arrow-up-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></symbol>
+<symbol id="i-badge-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"></path><path d="m9 12 2 2 4-4"></path></symbol>
+<symbol id="i-bot" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path></symbol>
+<symbol id="i-brain-circuit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"></path><path d="M9 13a4.5 4.5 0 0 0 3-4"></path><path d="M6.003 5.125A3 3 0 0 0 6.401 6.5"></path><path d="M3.477 10.896a4 4 0 0 1 .585-.396"></path><path d="M6 18a4 4 0 0 1-1.967-.516"></path><path d="M12 13h4"></path><path d="M12 18h6a2 2 0 0 1 2 2v1"></path><path d="M12 8h8"></path><path d="M16 8V5a2 2 0 0 1 2-2"></path><circle cx="16" cy="13" r=".5"></circle><circle cx="18" cy="3" r=".5"></circle><circle cx="20" cy="21" r=".5"></circle><circle cx="20" cy="8" r=".5"></circle></symbol>
+<symbol id="i-building2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"></path><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"></path><path d="M10 6h4"></path><path d="M10 10h4"></path><path d="M10 14h4"></path><path d="M10 18h4"></path></symbol>
+<symbol id="i-circle-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></symbol>
+<symbol id="i-clipboard-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><path d="m9 14 2 2 4-4"></path></symbol>
+<symbol id="i-database" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5V19A9 3 0 0 0 21 19V5"></path><path d="M3 12A9 3 0 0 0 21 12"></path></symbol>
+<symbol id="i-earth" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.54 15H17a2 2 0 0 0-2 2v4.54"></path><path d="M7 3.34V5a3 3 0 0 0 3 3a2 2 0 0 1 2 2c0 1.1.9 2 2 2a2 2 0 0 0 2-2c0-1.1.9-2 2-2h3.17"></path><path d="M11 21.95V18a2 2 0 0 0-2-2a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05"></path><circle cx="12" cy="12" r="10"></circle></symbol>
+<symbol id="i-git-branch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="6" y1="3" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></symbol>
+<symbol id="i-inbox" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path></symbol>
+<symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></symbol>
+<symbol id="i-key-round" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"></path><circle cx="16.5" cy="7.5" r=".5" fill="currentColor"></circle></symbol>
+<symbol id="i-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"></path><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"></path><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"></path></symbol>
+<symbol id="i-lightbulb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></symbol>
+<symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></symbol>
+<symbol id="i-messages-square" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9a2 2 0 0 1-2 2H6l-4 4V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2z"></path><path d="M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1"></path></symbol>
+<symbol id="i-palette" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"></circle><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"></circle><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"></circle><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"></circle><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"></path></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5v14"></path></symbol>
+<symbol id="i-shield-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></symbol>
+<symbol id="i-sparkles" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path><path d="M20 3v4"></path><path d="M22 5h-4"></path><path d="M4 17v2"></path><path d="M5 18H3"></path></symbol>
+<symbol id="i-trophy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></symbol>
+<symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></symbol>
+<symbol id="i-wand-sparkles" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72"></path><path d="m14 7 3 3"></path><path d="M5 6v4"></path><path d="M19 14v4"></path><path d="M10 2v2"></path><path d="M7 8H3"></path><path d="M21 16h-4"></path><path d="M11 3H9"></path></symbol>
+<symbol id="i-workflow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="8" x="3" y="3" rx="2"></rect><path d="M7 11v4a2 2 0 0 0 2 2h4"></path><rect width="8" height="8" x="13" y="13" rx="2"></rect></symbol>
+
+<symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+<symbol id="i-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
+<symbol id="i-presentation" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h20"/><path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3"/><path d="m7 21 5-5 5 5"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></symbol>
+</svg>
+
+<header class="nav" data-nav>
+  <a class="brand" href="#top" aria-label="AI-LA başa dön"><img src="assets/aila-mark.png" alt="" width="30" height="30" /><span>AI-LA</span></a>
+  <nav aria-label="Sayfa bölümleri">
+    <ul class="nav-links">
+      <li><a href="#ekosistem">Ekosistem</a></li>
+      <li><a href="#kendini-tani">Beceri Haritası</a></li>
+      <li><a href="#okul-sayfasi">Okul Sayfası</a></li>
+      <li><a href="#roller">Roller</a></li>
+      <li><a href="#guvenlik">Güvenlik</a></li>
+      <li><a href="#sss">SSS</a></li>
+    </ul>
+  </nav>
+  <button type="button" class="btn btn-solid btn-sm" data-open-demo>Demo Talep Et</button>
+</header>
+
+<!-- Veri evreni: 100vh yapışık sahne; kaydırma galaksiyi ekosisteme, ekosistemi beceri haritasına çevirir -->
+<section class="universe" id="top" data-universe aria-label="AI-LA veri evreni">
+  <span class="u-anchor" id="ekosistem" style="top: 37%"></span>
+  <span class="u-anchor" id="kendini-tani" style="top: 74%"></span>
+  <div class="u-sticky">
+    <canvas class="u-canvas" data-canvas aria-hidden="true"></canvas>
+    <div class="u-labels" data-labels aria-hidden="true"></div>
+
+    <!-- 1 · marka -->
+    <div class="phase phase-hero" data-phase="hero">
+      <div class="hero-copy">
+        <p class="domain"><svg class="icon" aria-hidden="true"><use href="#i-lock" /></svg><span data-domain>ai.okulunuz.k12.tr</span></p>
+        <h1>
+          <span class="name-line">
+            <label class="sr-only" for="okul">Okulunuzun adı</label>
+            <input id="okul" class="name" data-name type="text" maxlength="28" autocomplete="organization" spellcheck="false" placeholder="Okulunuz" />
+            <span class="suffix" data-suffix>un</span>
+            <span class="name-mirror" data-mirror aria-hidden="true"></span>
+          </span>
+          <span class="rest">kendi yapay zekâsı.</span>
+        </h1>
+        <p class="lede">Alan adınız, logonuz, renkleriniz. Öğrenciye, öğretmene ve yöneticiye göre şekillenir; bağlı tüm platformlar tek oturumda.</p>
+        <div class="studio">
+          <fieldset class="swatches">
+            <legend>Okul rengi</legend>
+            <label><input type="radio" name="renk" value="bordo" /><span style="--c:#b01e32"></span><b class="sr-only">Bordo</b></label>
+            <label><input type="radio" name="renk" value="mavi" /><span style="--c:#345de0"></span><b class="sr-only">Mavi</b></label>
+            <label><input type="radio" name="renk" value="turkuaz" /><span style="--c:#008978"></span><b class="sr-only">Turkuaz</b></label>
+            <label><input type="radio" name="renk" value="mor" /><span style="--c:#914db8"></span><b class="sr-only">Mor</b></label>
+            <label><input type="radio" name="renk" value="turuncu" /><span style="--c:#c9582b"></span><b class="sr-only">Turuncu</b></label>
+          </fieldset>
+          <p class="hint" role="status" data-status>Adını yazın, rengini seçin.</p>
+        </div>
+        <div class="actions">
+          <button type="button" class="btn btn-solid" data-open-demo>Demo Talep Et<svg class="icon" aria-hidden="true"><use href="#i-arrow-right" /></svg></button>
+          <a class="btn btn-ghost" href="#ekosistem">Ekosistemi keşfet</a>
+        </div>
+      </div>
+
+      <div class="cards" aria-hidden="true">
+        <article class="card" data-card>
+          <header><b class="badge" data-initial>O</b><span><strong><i data-school>Okulunuz</i> AI</strong><small>Öğrenci</small></span></header>
+          <p class="msg">Fotosentez özetin hazır. Eksik kaldığın yer: <mark>ışık tepkimeleri</mark>.</p>
+          <div class="meter"><i style="--v:72"></i></div>
+          <footer>Bugünkü görevler · 3 / 4</footer>
+        </article>
+        <article class="card" data-card>
+          <header><b class="badge" data-initial>O</b><span><strong><i data-school>Okulunuz</i> AI</strong><small>Öğretmen</small></span></header>
+          <p class="msg">7-A Fen için 40 dakikalık ders planı ve 10 soruluk karma sınav hazırlandı.</p>
+          <div class="tags"><span>Ders planı</span><span>Sınav</span><span>Whiteboard</span></div>
+          <footer>Sınıf · 28 öğrenci</footer>
+        </article>
+        <article class="card" data-card>
+          <header><b class="badge" data-initial>O</b><span><strong><i data-school>Okulunuz</i> AI</strong><small>Yönetici</small></span></header>
+          <p class="msg">Bu hafta <b>+12</b> veli talebi geldi, hepsi aydınlatma onaylı.</p>
+          <div class="mini-bars"><i style="--v:40"></i><i style="--v:62"></i><i style="--v:55"></i><i style="--v:80"></i><i style="--v:92"></i></div>
+          <footer>Mini CRM · KVKK uyumlu</footer>
+        </article>
+      </div>
+    </div>
+
+    <!-- 2 · ekosistem -->
+    <div class="phase phase-eco" data-phase="eco">
+      <p class="eyebrow">Köprü · Ekosistem</p>
+      <h2><span data-school>Okulunuz</span> için tek oturum, bağlı tüm platformlar.</h2>
+      <ul class="checks">
+        <li>Tek oturum</li><li>Kurum kimliği</li><li>Rol kontrolü</li><li>Veri eşleştirme</li><li>Standart analiz akışı</li>
+      </ul>
+    </div>
+
+    <!-- 3 · beceri haritası (Kendini Tanı) -->
+    <div class="phase phase-graph" data-phase="graph">
+      <div class="g-copy">
+        <p class="eyebrow">Kendini Tanı · Beceri haritası</p>
+        <h2>AI-LA'nın en güçlü kası: bireyselleştirme.</h2>
+        <div class="students" role="radiogroup" aria-label="Örnek öğrenci" data-students></div>
+        <!-- sade tutuldu: profil tek satır, tek öneri; platform sinyalleri sağ alttaki canlı akışta -->
+        <dl class="g-facts">
+          <div><dt>Öğrenme profili</dt><dd data-profile></dd></div>
+          <div class="g-advice"><dt>AI-LA önerisi</dt><dd data-advice></dd></div>
+        </dl>
+      </div>
+      <div class="ticker" aria-live="polite" data-ticker><span class="live-dot" aria-hidden="true"></span><ul data-feed></ul></div>
+      <table class="sr-only" data-skill-table><caption>Beceri haritası</caption><thead><tr><th>Alan</th><th>Puan</th><th>Besleyen platformlar</th></tr></thead><tbody></tbody></table>
+      <p class="sim-note">Simülasyon verisi · gerçek öğrenci verisi değildir</p>
+    </div>
+
+    <nav class="u-steps" aria-label="Hikâye adımları">
+      <a href="#top" data-step="0"><i></i><span>Marka</span></a>
+      <a href="#ekosistem" data-step="1"><i></i><span>Ekosistem</span></a>
+      <a href="#kendini-tani" data-step="2"><i></i><span>Beceri haritası</span></a>
+      <a class="u-skip" href="#okul-sayfasi">Atla</a>
+    </nav>
+    <p class="scroll-cue" data-cue aria-hidden="true">Kaydırın</p>
+  </div>
+</section>
+
+<main id="icerik">
+<!-- ============ OKUL SAYFASI ============ -->
+  <section class="section section-warm" id="okul-sayfasi" aria-labelledby="h-okul">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="h-okul">Okulunuzun dijital kapısı, üç net yol.</h2>
+        <p class="lede"><span data-school-name>Demo Koleji</span> için hazırlanan karşılama sayfası; kullanıcılarınızı girişe, velileri bilgi talebine, öğrencileri yarışmalara yönlendirir. Her başvuru izin bilgileriyle birlikte panelinize düşer.</p>
+      </div>
+
+      <div class="paths-grid">
+        <ol class="paths">
+          <li>
+            <span class="path-icon"><svg class="icon" aria-hidden="true"><use href="#i-key-round" /></svg></span>
+            <div>
+              <h3>Giriş Yap</h3>
+              <p>Öğrenci, öğretmen ve yönetici tek oturumla okulun dijital dünyasına girer.</p>
+              <p class="meta">SSO · Rol bazlı yönlendirme</p>
+            </div>
+          </li>
+          <li>
+            <span class="path-icon"><svg class="icon" aria-hidden="true"><use href="#i-building2" /></svg></span>
+            <div>
+              <h3>Okulumuz Hakkında Bilgi Al</h3>
+              <p>Veli talepleri izin bilgileriyle birlikte okulun Mini CRM paneline düşer.</p>
+              <p class="meta">Mini CRM · Aydınlatma metni onayı</p>
+            </div>
+          </li>
+          <li>
+            <span class="path-icon"><svg class="icon" aria-hidden="true"><use href="#i-trophy" /></svg></span>
+            <div>
+              <h3>Yarışmaya Katıl</h3>
+              <p>Aktivasyon kodu ile okulun yarışmalarına katılım; pazarlama iznine bağlı değil.</p>
+              <p class="meta">Aktivasyon kodu · Veli onayı</p>
+            </div>
+          </li>
+        </ol>
+
+        <figure class="panel crm">
+          <figcaption class="crm-head">
+            <span class="crm-icon"><svg class="icon" aria-hidden="true"><use href="#i-inbox" /></svg></span>
+            <span><strong>Mini CRM</strong><small>Yönetici paneli · bugün</small></span>
+            <span class="pill pill-ok">+12 yeni</span>
+          </figcaption>
+          <dl class="crm-stats">
+            <div><dt>Veli talebi</dt><dd>48</dd></div>
+            <div><dt>Yarışmacı</dt><dd>126</dd></div>
+            <div><dt>Ticari izin</dt><dd>%71</dd></div>
+          </dl>
+          <ul class="crm-list">
+            <li>
+              <span class="avatar">A</span>
+              <span class="who"><strong>Ayşe K. <em>· Bilgi talebi</em></strong><small>Ortaokul · 2 dk önce</small></span>
+              <span class="ok"><svg class="icon" aria-hidden="true"><use href="#i-circle-check" /></svg>Aydınlatma</span>
+            </li>
+            <li>
+              <span class="avatar">M</span>
+              <span class="who"><strong>Mert D. <em>· Yarışma</em></strong><small>Kod: OKUL-2026-K4F · 18 dk önce</small></span>
+              <span class="ok"><svg class="icon" aria-hidden="true"><use href="#i-circle-check" /></svg>Veli onayı</span>
+            </li>
+            <li>
+              <span class="avatar">S</span>
+              <span class="who"><strong>Selin A. <em>· Bilgi talebi</em></strong><small>Lise · 1 sa önce</small></span>
+              <span class="ok"><svg class="icon" aria-hidden="true"><use href="#i-circle-check" /></svg>Ticari ileti</span>
+            </li>
+          </ul>
+          <p class="crm-note"><svg class="icon" aria-hidden="true"><use href="#i-info" /></svg>Yarışmaya katılım pazarlama iznine bağlı değildir. Çocuklara ait bilgiler pazarlama amacıyla otomatik kullanılmaz.</p>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ROLLER ============ -->
+  <section class="section" id="roller" aria-labelledby="h-roller">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="h-roller">Herkes kendi yapay zekâsını görür.</h2>
+        <p class="lede">Sol menüler arasında kaybolmak yok. Giriş yapan kullanıcı, rolüne göre hazırlanmış araçları, ajanları ve akışları ana sayfasında bulur.</p>
+      </div>
+
+      <div class="tabs" role="tablist" aria-label="Rol seçin" data-tabs>
+        <button type="button" role="tab" id="tab-ogrenci" aria-controls="panel-ogrenci" aria-selected="true">Öğrenci</button>
+        <button type="button" role="tab" id="tab-ogretmen" aria-controls="panel-ogretmen" aria-selected="false" tabindex="-1">Öğretmen</button>
+        <button type="button" role="tab" id="tab-yonetici" aria-controls="panel-yonetici" aria-selected="false" tabindex="-1">Yönetici</button>
+      </div>
+
+      <div class="app-frame">
+        <div class="app-bar">
+          <span class="badge" data-school-initial>D</span>
+          <span class="app-name"><strong><span data-school-name>Demo Koleji</span> AI</strong><small>Yapay Zekâ Ekosistemi</small></span>
+          <span class="app-profile" data-role-profile>Öğrenci profili</span>
+        </div>
+
+        <div class="tabpanel" role="tabpanel" id="panel-ogrenci" aria-labelledby="tab-ogrenci" tabindex="0" data-profile="Öğrenci profili">
+          <h3>Menüler arasında kaybolmadan, kendi okulunun AI dünyasında.</h3>
+          <p>Öğrenci giriş yaptığında doğrudan kurumunun AI ekosistemini görür. Araçlar, sohbet ve görevler; düzeyine ve eksik alanlarına göre bireyselleşir.</p>
+          <ul class="tools">
+            <li><svg class="icon" aria-hidden="true"><use href="#i-wand-sparkles" /></svg><h4>Araç</h4><p>Üretim, araştırma ve öğrenme için rolüne uygun AI araçları.</p></li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-messages-square" /></svg><h4>Chat</h4><p>Seviyeni ve ilgini bilen kişisel AI sohbet alanı.</p></li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-workflow" /></svg><h4>Akış</h4><p>Adım adım çalışan yapay zekâ senaryoları.</p></li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-bot" /></svg><h4>Ajan</h4><p>Senin adına belirli görevleri yürüten AI ajanları.</p></li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-clipboard-check" /></svg><h4>Görev</h4><p>Öğrenme görevleri, teslimler ve gelişim aksiyonları.</p></li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-users" /></svg><h4>Topluluk</h4><p>Paylaşımlar, ilgi grupları ve birlikte öğrenme.</p></li>
+          </ul>
+        </div>
+
+        <div class="tabpanel" role="tabpanel" id="panel-ogretmen" aria-labelledby="tab-ogretmen" tabindex="0" data-profile="Öğretmen profili" hidden>
+          <h3>Ders planından sınav okumaya, öğretmenin AI çalışma alanı.</h3>
+          <p>Öğretmen; araç, chat, akış ve ajanlara ek olarak whiteboard ve sınıf yönetimine ulaşır. AI destekli ölçme-değerlendirme süreçleri ekosistem içinde desteklenir.</p>
+          <ul class="tools">
+            <li><svg class="icon" aria-hidden="true"><use href="#i-wand-sparkles" /></svg><h4>Akıllı Araçlar</h4><p>Ders planı, karışık sınav, veli toplantısı raporu ve daha fazlası.</p></li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-messages-square" /></svg><h4>Chat</h4><p>İçerik, fikir geliştirme ve rehberlik için AI sohbeti.</p></li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-presentation" /></svg><h4>Whiteboard</h4><p>Tahta içerikleri, görseller ve özetler için hızlı üretim.</p></li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-building2" /></svg><h4>Sınıf Yönetimi</h4><p>Şube, öğrenci, görev ve takip ekranları.</p></li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-git-branch" /></svg><h4>Ajan &amp; Akış</h4><p>Raporlama, analiz ve içerik üreten otomasyonlar.</p></li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-users" /></svg><h4>Topluluk</h4><p>Meslektaş paylaşımı ve ortak kaynak üretimi.</p></li>
+          </ul>
+        </div>
+
+        <div class="tabpanel" role="tabpanel" id="panel-yonetici" aria-labelledby="tab-yonetici" tabindex="0" data-profile="Yönetici profili" hidden>
+          <h3>Kurumun yapay zekâ ekosistemini tek merkezden yönetin.</h3>
+          <p>Kullanıcıları, AI politikalarını, ajanları, krediyi ve kurumsal hafızayı yönetin. Köprü ile bağlı platformlardan gelen veriyi standart biçimde analiz edin.</p>
+          <ul class="tools">
+            <li><svg class="icon" aria-hidden="true"><use href="#i-users" /></svg><h4>Kullanıcılar</h4><p>Öğrenci, öğretmen ve yönetici erişimleri.</p></li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-shield-check" /></svg><h4>AI Politikaları</h4><p>Güvenli AI katmanı, rol yetkileri ve model sınırları.</p></li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-database" /></svg><h4>Kurumsal Hafıza</h4><p>Belgeler ve kuruma özel bilgi kaynakları.</p></li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-workflow" /></svg><h4>Ajan ve Akış</h4><p>Kurum genelinde ajan ve flow şablonları.</p></li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-inbox" /></svg><h4>Mini CRM</h4><p>Web sitesinden gelen veli ve yarışma başvuruları.</p></li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-chart" /></svg><h4>Kredi &amp; Rapor</h4><p>Lisans, kullanım, maliyet ve performans.</p></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GÜVENLİK ============ -->
+  <section class="section section-tint" id="guvenlik" aria-labelledby="h-guvenlik">
+    <div class="wrap split">
+      <div class="split-head">
+        <h2 id="h-guvenlik">Okullar için tasarlandı, çocuklar düşünülerek kuruldu.</h2>
+        <p class="lede">Yetkilendirme, içerik filtreleri ve şeffaf izin akışları ürünün içine gömülü. Kurumunuzun politikaları her modelde ve her rolde geçerli.</p>
+      </div>
+      <ul class="safety">
+        <li>
+          <svg class="icon" aria-hidden="true"><use href="#i-shield-check" /></svg>
+          <div><h3>Güvenli Yapay Zekâ Katmanı</h3><p>Yaşa ve role göre içerik filtreleri, model sınırları ve kurum politikaları.</p></div>
+        </li>
+        <li>
+          <svg class="icon" aria-hidden="true"><use href="#i-badge-check" /></svg>
+          <div><h3>KVKK Uyumlu Akışlar</h3><p>Aydınlatma metni ve açık rıza ayrımı; ticari ileti izni her zaman isteğe bağlı.</p></div>
+        </li>
+        <li>
+          <svg class="icon" aria-hidden="true"><use href="#i-users" /></svg>
+          <div><h3>Çocuk Verisine Özen</h3><p>Öğrenci verileri pazarlama amacıyla otomatik olarak kullanılmaz.</p></div>
+        </li>
+        <li>
+          <svg class="icon" aria-hidden="true"><use href="#i-database" /></svg>
+          <div><h3>Kurumsal Hafıza</h3><p>Belgeleriniz kurumunuza özel kalır; yetkili roller dışında erişilemez.</p></div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ 4 ADIM ============ -->
+  <section class="section" aria-labelledby="h-adim">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="h-adim">Dört adımda okulunuzun AI ekosistemi.</h2>
+        <p class="lede">Teknik ekip gerekmeden marka kurulumundan kişiselleşmeye kadar birlikte ilerliyoruz.</p>
+      </div>
+      <ol class="steps">
+        <li><span class="step-n">1</span><h3>Markanızı tanımlayın</h3><p>Logo, renk paleti ve kurum adı. Karşılama sayfanız dakikalar içinde hazır.</p></li>
+        <li><span class="step-n">2</span><h3>Alan adınızı bağlayın</h3><p><span class="nowrap">ai.okulunuz.k12.tr</span> gibi kendi alan adınızda yayına alın.</p></li>
+        <li><span class="step-n">3</span><h3>Ekosistemi bağlayın</h3><p>Kullandığınız platformları Köprü ile tek oturuma bağlayın.</p></li>
+        <li><span class="step-n">4</span><h3>Kişiselleşmeyi başlatın</h3><p>Veriler aktıkça AI-LA her kullanıcıyı tanır ve yönlendirir.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ SSS ============ -->
+  <section class="section section-tint" id="sss" aria-labelledby="h-sss">
+    <div class="wrap faq-grid">
+      <div class="faq-head">
+        <h2 id="h-sss">Aklınızdaki sorular.</h2>
+        <p class="lede">Yapay zekâ destekli eğitim ekosistemi hakkında en çok merak edilen 10 soru.</p>
+      </div>
+      <div class="faq" data-faq>
+        <details name="sss" open>
+          <summary>AI-LA nedir, eğitim kurumlarına ne kazandırır?<svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg></summary>
+          <p>AI-LA, eğitim kurumlarının kendi markaları altında yapay zekâ destekli dijital eğitim ekosistemleri oluşturmasını sağlayan bütünleşik bir teknoloji platformudur. Okullar; yapay zekâ araçlarını, dijital beceri eğitimlerini, kodlama, hızlı okuma ve yarışma uygulamalarını tek bir ekosistemde bir araya getirerek öğrencilerine ve öğretmenlerine modern bir öğrenme deneyimi sunabilir.</p>
+        </details>
+        <details name="sss">
+          <summary>Okulumuz kendi markasıyla yapay zekâ platformuna sahip olabilir mi?<svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg></summary>
+          <p>Evet. AI-LA altyapısı sayesinde kurumunuz kendi logosu, renkleri, alan adı ve kurumsal kimliğiyle bir yapay zekâ ekosistemi oluşturabilir. Öğrencileriniz ve öğretmenleriniz, okulunuzun markasıyla hazırlanmış bir platform üzerinden hizmetlere erişebilir.</p>
+        </details>
+        <details name="sss">
+          <summary>AI-LA öğrenciler ve öğretmenler için hangi yapay zekâ araçlarını sunar?<svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg></summary>
+          <p>AI-LA; metin üretimi, görsel oluşturma, video üretimi, ses teknolojileri ve farklı yapay zekâ modellerine erişim gibi birçok yeteneği tek platformda birleştirir. Ayrıca AI ajanları, görsel iş akışları (Flow), hazır şablonlar ve öğretmenlere yönelik eğitim araçlarıyla içerik üretimini, araştırmayı ve günlük eğitim çalışmalarını destekler. Kullanılabilir özellikler seçilen lisans kapsamına göre değişebilir.</p>
+        </details>
+        <details name="sss">
+          <summary>AI-LA öğrenme deneyimini nasıl kişiselleştirir?<svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg></summary>
+          <p>AI-LA’nın Kendini Tanı yaklaşımı, öğrencilerin platform içindeki öğrenme etkinliklerini ve izinli verilerini değerlendirerek güçlü yönlerini, gelişim alanlarını ve öğrenme ihtiyaçlarını görünür kılmayı hedefler. Böylece öğrencilerin uygun eğitim içeriklerine ve araçlara yönlendirilmesi, öğretmenlerin de öğrencilerin gelişimini daha yakından takip edebilmesi desteklenir.</p>
+        </details>
+        <details name="sss">
+          <summary>AI-LA ekosistemindeki farklı eğitim uygulamaları birlikte çalışabilir mi?<svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg></summary>
+          <p>Evet. AI-LA’nın Köprü entegrasyon altyapısı, farklı eğitim uygulamalarını ortak bir dijital deneyimde buluşturur. Desteklenen uygulamalara tek oturumla erişim sağlanabilir. Kurumlar ihtiyaç duydukları ürünleri seçerken kullanıcılar da yetkili oldukları hizmetlere aynı ekosistem üzerinden ulaşabilir.</p>
+        </details>
+        <details name="sss">
+          <summary>AI-LA öğretmenlerin günlük çalışmalarını nasıl kolaylaştırır?<svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg></summary>
+          <p>AI-LA, öğretmenlerin ders materyalleri hazırlamasına, özgün etkinlikler oluşturmasına, görsel ve video içerikleri üretmesine ve yapay zekâ destekli eğitim araçlarından yararlanmasına yardımcı olur. Sınıf yönetimi, görevler ve dijital çalışma alanları gibi özellikler sayesinde öğretmenlerin hazırlık süreçleri desteklenirken daha etkileşimli öğrenme ortamları oluşturulabilir.</p>
+        </details>
+        <details name="sss">
+          <summary>AI-LA ekosisteminde hangi eğitim platformları bulunur?<svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg></summary>
+          <p>AI-LA ekosistemi farklı öğrenme ihtiyaçlarına yönelik uzmanlaşmış çözümler sunar. Talent14 dijital beceri ve teknoloji eğitimine, AI-GALAXY yapay zekâ okuryazarlığına, Codemino kodlama becerilerine, Okumino hızlı okuma çalışmalarına ve TalentCup öğrenci yarışmalarına odaklanır. Kurumlar ihtiyaç duydukları hizmetleri seçerek kendi ekosistemlerini oluşturabilir.</p>
+        </details>
+        <details name="sss">
+          <summary>Okulumuz AI-LA üzerinden kendi yarışmalarını düzenleyebilir mi?<svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg></summary>
+          <p>Evet. TalentCup altyapısı sayesinde kurumunuz kendi markası altında öğrenci yarışmaları ve proje etkinlikleri düzenleyebilir. Aktivasyon kodlarıyla katılım süreçlerini yönetebilir, başvuruları takip edebilir ve öğrencilerin ürettikleri projeleri değerlendirme süreçlerine dahil edebilirsiniz. Böylece yarışmalar, öğrencilerin teknolojiyle üretmesini teşvik eden bir öğrenme deneyimine dönüşebilir.</p>
+        </details>
+        <details name="sss">
+          <summary>AI-LA okulumuzun yeni öğrenci kazanımına nasıl katkı sağlar?<svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg></summary>
+          <p>AI-LA, eğitim hizmetlerinin yanı sıra okulunuzun dijital tanıtım ve başvuru süreçlerini de destekler. Okulunuza özel karşılama sayfasından gelen bilgi taleplerini, yarışma başvurularını ve dijital reklam kampanyalarından oluşan aday veli iletişimlerini Mini CRM üzerinden takip edebilirsiniz. Böylece okulunuz yeni kayıt fırsatlarını daha düzenli yönetebilir. Pazarlama iletişiminde ilgili kişisel veri ve iletişim izinleri ayrıca gözetilir.</p>
+        </details>
+        <details name="sss">
+          <summary>AI-LA ekosistemini kullanmak için tüm ürünleri satın almak gerekir mi?<svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg></summary>
+          <p>Hayır. AI-LA’nın en önemli avantajlarından biri ihtiyaca göre büyüyebilen modüler yapısıdır. Kurumunuz Standart veya Premium paketi belirleyerek ihtiyaç duyduğu eğitim uygulamalarını ekosistemine dahil edebilir. Satın alınmayan ürünler de keşfedilebilir, ancak kullanıcıların erişim yetkileri kurumun lisanslarına göre yönetilir. İhtiyaçlar değiştikçe yeni ürünler eklenebilir.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section class="cta-wrap" aria-labelledby="h-cta">
+    <div class="wrap">
+      <div class="cta">
+        <h2 id="h-cta">Okulunuzun yapay zekâ ekosistemini birlikte kuralım.</h2>
+        <p>30 dakikalık demoda markanızla hazırlanmış karşılama sayfanızı ve rol bazlı deneyimi canlı gösterelim.</p>
+        <div class="actions">
+          <button type="button" class="btn btn-light btn-lg" data-open-demo>
+            Demo Talep Et
+            <svg class="icon" aria-hidden="true"><use href="#i-arrow-right" /></svg>
+          </button>
+          <a class="btn btn-outline-light btn-lg" href="#top">Başa dön</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <a class="brand" href="#top" aria-label="AI-LA ana sayfa"><img src="assets/aila-mark.png" alt="" width="32" height="32" /><span>AI-LA</span></a>
+      <p>Okulların kendi markasıyla çalışan, rol bazlı ve kişiselleşen yapay zekâ ekosistemi altyapısı.</p>
+    </div>
+    <nav aria-label="Sayfa bölümleri">
+      <h2>Sayfa</h2>
+      <ul>
+        <li><a href="#okul-sayfasi">Okul Sayfası</a></li>
+        <li><a href="#roller">Roller</a></li>
+        <li><a href="#ekosistem">Ekosistem</a></li>
+        <li><a href="#kendini-tani">Beceri Haritası</a></li>
+        <li><a href="#guvenlik">Güvenlik</a></li>
+        <li><a href="#sss">SSS</a></li>
+      </ul>
+    </nav>
+    <nav aria-label="Yasal">
+      <h2>Yasal</h2>
+      <ul>
+        <!-- TODO: gerçek metinlerin adresleri -->
+        <li><a href="/kvkk-aydinlatma-metni">KVKK Aydınlatma Metni</a></li>
+        <li><a href="/gizlilik">Gizlilik Politikası</a></li>
+        <li><a href="/cerez-politikasi">Çerez Politikası</a></li>
+      </ul>
+    </nav>
+    <div>
+      <h2>İletişim</h2>
+      <ul>
+        <li><button type="button" class="linklike" data-open-demo>Demo talep formu</button></li>
+        <li><a href="https://www.talent14.com/" target="_blank" rel="noopener">talent14.com<span class="sr-only"> (yeni sekmede açılır)</span></a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap footer-base">
+    <p>© <span data-year>2026</span> AI-LA · Tüm hakları saklıdır.</p>
+    <p>Bir TALENT14 ekosistem ürünüdür.</p>
+  </div>
+</footer>
+
+<dialog class="modal" aria-labelledby="demo-title" data-demo>
+  <form class="demo-form" method="dialog" novalidate data-demo-form>
+    <div class="modal-head">
+      <h2 id="demo-title">Demo Talep Et</h2>
+      <button type="button" class="icon-btn" data-close-demo>
+        <svg class="icon" aria-hidden="true"><use href="#i-x" /></svg><span class="sr-only">Kapat</span>
+      </button>
+    </div>
+
+    <div data-form-body>
+      <p class="modal-lede">Okulunuzun markasıyla hazırlanmış canlı bir önizleme ile size dönelim.</p>
+
+      <div class="f">
+        <label for="f-ad">Ad soyad</label>
+        <input id="f-ad" name="ad" class="field" type="text" autocomplete="name" required aria-describedby="e-ad" />
+        <p class="err" id="e-ad"></p>
+      </div>
+      <div class="f">
+        <label for="f-kurum">Kurum adı</label>
+        <input id="f-kurum" name="kurum" class="field" type="text" autocomplete="organization" required aria-describedby="e-kurum" />
+        <p class="err" id="e-kurum"></p>
+      </div>
+      <div class="f-row">
+        <div class="f">
+          <label for="f-eposta">E-posta</label>
+          <input id="f-eposta" name="eposta" class="field" type="email" autocomplete="email" inputmode="email" placeholder="ornek@okul.k12.tr" required aria-describedby="e-eposta" />
+          <p class="err" id="e-eposta"></p>
+        </div>
+        <div class="f">
+          <label for="f-tel">Telefon</label>
+          <input id="f-tel" name="tel" class="field" type="tel" autocomplete="tel" inputmode="tel" placeholder="05XX XXX XX XX" required aria-describedby="e-tel" />
+          <p class="err" id="e-tel"></p>
+        </div>
+      </div>
+      <div class="f">
+        <label for="f-gorev">Göreviniz</label>
+        <div class="select">
+          <select id="f-gorev" name="gorev" class="field" required aria-describedby="e-gorev">
+            <option value="" disabled selected>Seçiniz</option>
+            <option>Kurucu / Genel Müdür</option>
+            <option>Okul Müdürü</option>
+            <option>Bilgi Teknolojileri Sorumlusu</option>
+            <option>Öğretmen</option>
+            <option>Diğer</option>
+          </select>
+          <svg class="icon" aria-hidden="true"><use href="#i-chevron-down" /></svg>
+        </div>
+        <p class="err" id="e-gorev"></p>
+      </div>
+      <div class="f">
+        <label class="check">
+          <input type="checkbox" name="onay" required aria-describedby="e-onay" />
+          <span><a href="/kvkk-aydinlatma-metni" target="_blank" rel="noopener">Aydınlatma metnini</a> okudum, iletişim amacıyla bilgilerimin işlenmesini kabul ediyorum.</span>
+        </label>
+        <p class="err" id="e-onay"></p>
+      </div>
+      <p class="form-error" role="alert" data-form-error></p>
+      <button type="submit" class="btn btn-primary btn-lg btn-block" data-submit>Talebi Gönder</button>
+    </div>
+
+    <div class="done" data-form-done hidden tabindex="-1">
+      <svg class="icon" aria-hidden="true"><use href="#i-circle-check" /></svg>
+      <h3>Talebiniz alındı.</h3>
+      <p>Ekibimiz <strong data-done-kurum></strong> için önizlemeyi hazırlayıp kısa süre içinde size dönecek.</p>
+      <button type="button" class="btn btn-ghost" data-close-demo>Kapat</button>
+    </div>
+  </form>
+</dialog>
+</body>
+</html>
