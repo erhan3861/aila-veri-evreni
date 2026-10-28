@@ -17,7 +17,7 @@
   --ok: #6ee7b7;
   --warn: #f3b45b;
   /* aşağıdaki ürün ekranları için (index.html'den gelen işaretleme) */
-  --school: #b01e32; --school-2: #e98b78; --school-soft: #fbeef0;
+  --school: #345de0; --school-2: #8fa6ff; --school-soft: #eef2fd;   /* ürün ekranı örnekleri: varsayılan mavi */
   --brand-600: #5049dc; --brand-700: #433bbf;
 
   --font: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
