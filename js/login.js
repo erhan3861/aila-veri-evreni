@@ -2,7 +2,7 @@
 // Arka planda okulun cam monogramı (monogram.js): okulun adının ilk harfi, okul renginde.
 import { mountMonogram } from "./monogram.js";
 import { initLoginForms } from "./login-forms.js";
-import { hexToOklch, oklchToHex } from "../oklch.js";
+import { hexToOklch, oklchToHex } from "./oklch.js";
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];

@@ -1,7 +1,7 @@
 // Kendini Tanı beceri haritası: veri evreni sayfasındaki grafiğin aynısı (universe.js), kaydırma olmadan doğrudan
 // grafik durumunda. Platform darbeleri alt kırılımlara gider, karne ve puanlar canlı güncellenir. Simülasyon verisi.
-import { createUniverse, AREA_COLORS } from "./universe-km.js";
-import { PRODUCTS, AREAS, STUDENTS } from "./data-km.js";
+import { createUniverse, AREA_COLORS } from "./universe.js";
+import { PRODUCTS, AREAS, STUDENTS } from "./data.js";
 
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const clamp01 = (x) => Math.min(1, Math.max(0, x));

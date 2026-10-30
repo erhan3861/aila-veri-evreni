@@ -1,6 +1,6 @@
-// Okul giriş sayfalarının ortak sekme ve form mantığı (giris.html, giris-ilkokul.html).
+// Okul giriş sayfalarının ortak sekme ve form mantığı (giris.html).
 // Sayfaya özgü tepkiler hooks ile gelir: focus(el), input(el), blur(), busy(true|false, odakta).
-// text ile düğme ve sonuç metinleri değiştirilebilir (ilkokul sayfası çocuğa hitap eder).
+// text ile düğme ve sonuç metinleri değiştirilebilir.
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 
@@ -50,7 +50,7 @@ export function initLoginForms({ school, hooks = {}, text = {} }) {
     kod.value = [raw.slice(0, 4), raw.slice(4, 8), raw.slice(8)].filter(Boolean).join("-");
   });
 
-  // sayfanın kendi tepkileri (yetişkin sayfasında monogram dinler/düşünür, ilkokulda maskot)
+  // sayfanın kendi tepkileri (giriş sayfasında monogram dinler/düşünür)
   const panel = $(".panel");
   panel.addEventListener("focusin", (e) => hooks.focus?.(e.target));
   panel.addEventListener("input", (e) => hooks.input?.(e.target));

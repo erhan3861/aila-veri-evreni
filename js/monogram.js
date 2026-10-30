@@ -4,7 +4,7 @@
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
 import * as opentype from "https://cdn.jsdelivr.net/npm/opentype.js@1.3.4/dist/opentype.module.js";
 import { BRAIN } from "./brain-data.js";
-import { hexToOklch, oklchToHex } from "../oklch.js";
+import { hexToOklch, oklchToHex } from "./oklch.js";
 
 // ---------- yeniden kurulum verisi (spec'in kodda kalan kopyası) ----------
 export const MONOGRAM = {

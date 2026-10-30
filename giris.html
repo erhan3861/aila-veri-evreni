@@ -3,16 +3,16 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Giriş · Demo Koleji AI</title>
-  <meta name="description" content="Okulunuzun yapay zekâ platformuna giriş yapın, yarışmaya katılın ya da bilgi talep edin." />
   <meta name="robots" content="noindex" />
+  <title>Giriş · Demo Koleji AI</title>
+  <meta name="description" content="Okulunuzun yapay zekâ platformuna giriş yapın ya da yarışmaya katılın." />
   <meta name="theme-color" content="#0d1023" />
   <link rel="icon" type="image/png" href="assets/aila-mark.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&family=Sora:wght@300;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="v2/login.css" />
-  <script type="module" src="v2/login.js"></script>
+  <link rel="stylesheet" href="css/login.css" />
+  <script type="module" src="js/login.js"></script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -45,7 +45,6 @@
       <span class="tab-ind" aria-hidden="true"></span>
       <button type="button" role="tab" id="t-giris" aria-controls="p-giris" aria-selected="true">Giriş Yap</button>
       <button type="button" role="tab" id="t-yarisma" aria-controls="p-yarisma" aria-selected="false" tabindex="-1">Yarışmaya Katıl</button>
-      <button type="button" role="tab" id="t-form" aria-controls="p-form" aria-selected="false" tabindex="-1">Form Doldur</button>
     </div>
 
     <!-- 1 · giriş -->
@@ -76,42 +75,8 @@
         <input id="y-kod" name="kod" class="field code" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="OKUL-2026-K4F" required aria-describedby="e-kod" />
         <p class="err" id="e-kod"></p>
       </div>
-      <div class="f">
-        <label for="y-ad">Öğrencinin adı soyadı</label>
-        <input id="y-ad" name="ad" class="field" type="text" autocomplete="name" required aria-describedby="e-ad" />
-        <p class="err" id="e-ad"></p>
-      </div>
       <button type="submit" class="btn btn-primary">Devam Et<svg class="icon" aria-hidden="true"><use href="#i-arrow-right" /></svg></button>
       <p class="note">Katılmak için pazarlama izni vermeniz gerekmez. Velinizin onayını bir sonraki adımda isteriz.</p>
-      <p class="status" role="status" data-status></p>
-    </form>
-
-    <!-- 3 · bilgi formu -->
-    <form class="pane" role="tabpanel" id="p-form" aria-labelledby="t-form" novalidate data-form="form" hidden>
-      <div class="f">
-        <label for="b-ad">Veli adı soyadı</label>
-        <input id="b-ad" name="veli" class="field" type="text" autocomplete="name" required aria-describedby="e-veli" />
-        <p class="err" id="e-veli"></p>
-      </div>
-      <div class="f-row">
-        <div class="f">
-          <label for="b-tel">Telefon</label>
-          <input id="b-tel" name="tel" class="field" type="tel" inputmode="tel" autocomplete="tel" placeholder="05XX XXX XX XX" required aria-describedby="e-tel" />
-          <p class="err" id="e-tel"></p>
-        </div>
-        <div class="f">
-          <label for="b-sinif">Öğrencinin sınıfı</label>
-          <select id="b-sinif" name="sinif" class="field" required aria-describedby="e-sinif">
-            <option value="" disabled selected>Seçiniz</option>
-            <option>Anaokulu</option><option>İlkokul</option><option>Ortaokul</option><option>Lise</option>
-          </select>
-          <p class="err" id="e-sinif"></p>
-        </div>
-      </div>
-      <label class="check"><input type="checkbox" name="onay" required aria-describedby="e-onay" /><span><a class="link" href="#aydinlatma">Aydınlatma metnini</a> okudum.</span></label>
-      <p class="err" id="e-onay"></p>
-      <label class="check"><input type="checkbox" name="ticari" /><span>Okulun duyurularını almak istiyorum <em>(isteğe bağlı)</em></span></label>
-      <button type="submit" class="btn btn-primary">Talep Gönder<svg class="icon" aria-hidden="true"><use href="#i-arrow-right" /></svg></button>
       <p class="status" role="status" data-status></p>
     </form>
 

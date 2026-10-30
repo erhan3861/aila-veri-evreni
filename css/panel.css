@@ -1,4 +1,4 @@
-/* AI-LA panel 2: kenar menü + karşılama + öne çıkan araçlar + sağ sütun (Kendini Tanı, son aktiviteler, Talent Cup).
+/* AI-LA paneli: kenar menü + karşılama + öne çıkan araçlar + sağ sütun (Kendini Tanı, son aktiviteler, Talent Cup).
    Okul rengi --s; --v aynı rengin mora kaydırılmış eşi (JS, OKLCH). Masaüstünde tek ekran, kaydırma yok. */
 :root {
   --s: #345de0; --s-ink: #2a4bc0; --s-tint: #eef2fd; --v: #7b5cf0; --v-tint: #f3effe;

@@ -2,7 +2,7 @@
 // yumuşatılarak evreni (galaksi → ekosistem → beceri haritası) ve HTML katmanlarını sürer.
 import { createUniverse, AREA_COLORS } from "./universe.js";
 import { PRODUCTS, AREAS, FLOWS, STUDENTS } from "./data.js";
-import { hexToOklch, oklchToHex, mixOklch } from "../oklch.js";
+import { hexToOklch, oklchToHex, mixOklch } from "./oklch.js";
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -232,7 +232,7 @@ function setStudent(s) {
   student = s; sub = Object.fromEntries(Object.entries(s.sub).map(([k, v]) => [k, [...v]])); recompute(); evIdx = 0;
   $$("button", studentsEl).forEach((b, i) => b.setAttribute("aria-checked", String(STUDENTS[i] === s)));
   $("[data-cname]").textContent = s.name;
-  $("[data-advice]").textContent = s.advice;
+  const adv = $("[data-advice]"); if (adv) adv.textContent = s.advice; // öneri satırı ana sayfadan kaldırıldı
   renderScores();
   selectArea(AREAS.findIndex((a) => a.id === weakest()));
   nextEvent = performance.now() + 900;

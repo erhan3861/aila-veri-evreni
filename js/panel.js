@@ -1,7 +1,7 @@
-// AI-LA panel 2. Renk: panel2.html?renk=turkuaz|mor|turuncu|deniz (varsayılan mavi). Rol login'den gelir; demoda ?rol=ogretmen|yonetici
+// AI-LA paneli (login sonrası). Renk: panel.html?renk=turkuaz|mor|turuncu|deniz (varsayılan mavi). Rol login'den gelir; demoda ?rol=ogretmen|yonetici
 import * as THREE from "three";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
-import { hexToOklch, oklchToHex } from "../oklch.js";
+import { hexToOklch, oklchToHex } from "./oklch.js";
 
 const $ = (s, r = document) => r.querySelector(s);
 
