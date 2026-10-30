@@ -145,10 +145,22 @@ h1 { font-size: clamp(2.5rem, .9rem + 3.6vw, 4.5rem); font-weight: 800; letter-s
 .students { display: flex; gap: 6px; padding: 4px; border: 1px solid var(--line); border-radius: 14px; background: rgba(255, 255, 255, .03); }
 .students button { flex: 1; display: grid; gap: 2px; min-height: 48px; padding: 7px 10px; border: 0; border-radius: 10px; background: transparent; text-align: left; cursor: pointer; transition: background-color .2s, color .2s; }
 .students button b { font: 700 14px/1.2 var(--display); }
-.students button small { font: 500 11px/1.2 var(--mono); color: var(--ink-3); }
+.students button small { font: 400 12px/1.2 var(--font); color: var(--ink-3); }
 .students button:hover { background: var(--surface); }
 .students button[aria-checked="true"] { background: #fff; color: #0b0a1c; }
 .students button[aria-checked="true"] small { color: #5d6283; }
+/* beceri karnesi: düz, okunur satırlar (renk yalnız ince çubukta) */
+.karne { display: grid; gap: 0; border-top: 1px solid var(--line); }
+.karne li { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 6px 12px; padding: 11px 2px; border-bottom: 1px solid var(--line); cursor: pointer; }
+.karne .k-name { font-size: 15px; color: var(--ink-2); }
+.karne li:hover .k-name, .karne li[aria-selected="true"] .k-name { color: var(--ink); }
+.karne li[aria-selected="true"] .k-name { font-weight: 600; }
+.karne .k-val { font: 700 15px/1 var(--font); font-variant-numeric: tabular-nums; }
+.karne .k-bar { grid-column: 1 / -1; height: 2px; border-radius: 2px; background: rgba(255, 255, 255, .08); overflow: hidden; }
+.karne .k-bar i { display: block; height: 100%; width: 0; background: var(--c); transition: width .8s var(--m-out); }
+.karne li.weak .k-name::after { content: " (gelişim alanı)"; font-size: 13px; color: var(--ink-3); font-weight: 400; }
+.advice-line { font-size: 15px; line-height: 1.5; color: var(--ink); }
+.advice-line span:first-child { color: var(--ink-3); }
 .g-facts { display: grid; gap: 0; margin-top: 4px; border-top: 1px solid var(--line); }
 .g-facts > div { padding: 16px 0; border-bottom: 1px solid var(--line); }
 .g-facts dt { font: 600 11px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
@@ -209,7 +221,8 @@ h1 { font-size: clamp(2.5rem, .9rem + 3.6vw, 4.5rem); font-weight: 800; letter-s
 .lbl-hub .gap { grid-column: 1 / -1; font: 600 9.5px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--warn); }
 .lbl-hub.flash { animation: flash .9s var(--m-out); }
 @keyframes flash { 25% { border-color: #fff; box-shadow: 0 0 0 4px color-mix(in oklch, var(--c) 30%, transparent); } }
-.lbl-leaf { padding: 3px 6px; border-radius: 6px; background: rgba(11, 10, 28, .7); font: 500 10.5px/1 var(--mono); color: var(--ink-2); white-space: nowrap; }
+.lbl-leaf { display: inline-flex; gap: 6px; align-items: baseline; padding: 4px 8px; border-radius: 7px; background: rgba(11, 10, 28, .78); font: 500 11.5px/1 var(--font); color: var(--ink-2); white-space: nowrap; }
+.lbl-leaf b { font: 600 11.5px/1 var(--mono); color: var(--ink); font-variant-numeric: tabular-nums; }
 .lbl-center { display: grid; justify-items: center; gap: 2px; padding: 9px 16px; border-radius: 999px; background: rgba(11, 10, 28, .7); border: 1px solid var(--line-2); backdrop-filter: blur(8px); text-align: center; }
 .lbl-center small { font: 500 10px/1.2 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
 .lbl-center b { font: 700 14px/1.2 var(--display); }

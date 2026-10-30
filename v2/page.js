@@ -134,20 +134,22 @@ const resize = () => {
 /* ---------- 3B etiketleri ---------- */
 const el = (tag, cls, html) => { const e = document.createElement(tag); e.className = cls; if (html) e.innerHTML = html; labelsEl.appendChild(e); return e; };
 const prodLabels = PRODUCTS.map((p) => el("div", `lbl lbl-prod${p.mono ? " mono" : ""}${p.tall ? " tall" : ""}`,
-  `<span class="logo">${p.mark ? `<span class="tc"><img src="${p.logo}" alt="">${p.name}</span>` : `<img src="${p.logo}" alt="${p.name}">`}</span><p>${p.desc}</p>${p.isNew ? '<span class="plus">Yeni</span>' : ""}`));
+  `<span class="logo">${p.label ? `<span class="tc">${p.name}</span>` : p.mark ? `<span class="tc"><img src="${p.logo}" alt="">${p.name}</span>` : `<img src="${p.logo}" alt="${p.name}">`}</span><p>${p.desc}</p>`));
 const coreLabel = el("div", "lbl lbl-core", `<span class="core-disc"><img src="assets/aila-mark.png" alt="" width="52" height="52"></span><small>Tek oturum</small>`);
 const hubLabels = AREAS.map((a, i) => {
   const e = el("div", "lbl lbl-hub", `<span class="glyph ${a.shape}"></span><b>${a.short}</b><span class="val">0</span><span class="bar"><i></i></span><span class="gap">Gelişim alanı</span>`);
   e.style.setProperty("--c", AREA_COLORS[i]);
   return e;
 });
-const leafLabels = AREAS.flatMap((a, i) => a.skills.map((s, j) => ({ el: el("div", "lbl lbl-leaf", s), i, j })));
+const leafLabels = AREAS.flatMap((a, i) => a.skills.map((s, j) => ({ el: el("div", "lbl lbl-leaf", `${s} <b>0</b>`), i, j })));
 const centerLabel = el("div", "lbl lbl-center", `<strong data-cscore>0</strong><b data-cname></b>`);
 
-let hoverArea = -1;
+// alt kırılımlar yalnız bir alanda yazılır: karnede seçili alan (varsayılan: gelişim alanı); üzerine gelinen alan öne geçer
+let hoverArea = -1, selArea = -1;
 hubLabels.forEach((h, i) => {
   h.addEventListener("pointerenter", () => { hoverArea = i; });
   h.addEventListener("pointerleave", () => { hoverArea = -1; });
+  h.addEventListener("click", () => selectArea(i));
 });
 const place = (node, x, y, ax = 0.5, ay = 0.5) => {
   node.style.transform = `translate3d(${(x - node.offsetWidth * ax).toFixed(1)}px, ${(y - node.offsetHeight * ay).toFixed(1)}px, 0)`;
@@ -157,7 +159,9 @@ const show = (node, on) => node.classList.toggle("on", on);
 /* =========================================================
    Öğrenci beceri haritası (simülasyon)
    ========================================================= */
-let student = STUDENTS[0], scores = {}, bonus = 0, evIdx = 0, nextEvent = 0;
+let student = STUDENTS[0], sub = {}, scores = {}, evIdx = 0, nextEvent = 0;
+const avg = (v) => Math.round(v.reduce((x, y) => x + y, 0) / v.length);
+const recompute = () => { AREAS.forEach((a) => { scores[a.id] = avg(sub[a.id]); }); };
 const studentsEl = $("[data-students]");
 STUDENTS.forEach((s, i) => {
   const b = document.createElement("button");
@@ -183,7 +187,26 @@ const tweenNum = (node, to, dur = 700) => {
   requestAnimationFrame(step);
 };
 const weakest = () => AREAS.reduce((m, a) => (scores[a.id] < scores[m] ? a.id : m), AREAS[0].id);
-const overall = () => Math.min(99, student.score + Math.round(bonus * 0.4));
+const overall = () => avg(AREAS.map((a) => scores[a.id]));
+
+// karne: altı satır, her satırda alan adı, puan, ince çubuk; seçilen satırın alt kırılımları grafikte açılır
+const karneEl = $("[data-karne]");
+karneEl.innerHTML = AREAS.map((a, i) => `<li role="option" tabindex="${i ? -1 : 0}" aria-selected="false" data-i="${i}" style="--c:${AREA_COLORS[i]}">
+  <span class="k-name">${a.name}</span><b class="k-val">0</b><span class="k-bar"><i></i></span></li>`).join("");
+const karneRows = $$("li", karneEl);
+function selectArea(i, focus) {
+  selArea = i;
+  karneRows.forEach((r, k) => { r.setAttribute("aria-selected", String(k === i)); r.tabIndex = k === i ? 0 : -1; });
+  if (focus) karneRows[i].focus();
+}
+karneRows.forEach((r, i) => {
+  r.addEventListener("click", () => selectArea(i));
+  r.addEventListener("keydown", (e) => {
+    const to = { ArrowDown: i + 1, ArrowUp: i - 1, Home: 0, End: AREAS.length - 1 }[e.key];
+    if (to !== undefined) { e.preventDefault(); selectArea((to + AREAS.length) % AREAS.length, true); }
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); selectArea(i); }
+  });
+});
 
 const renderScores = () => {
   AREAS.forEach((a, i) => {
@@ -191,39 +214,43 @@ const renderScores = () => {
     tweenNum($(".val", hubLabels[i]), v);
     $(".bar i", hubLabels[i]).style.setProperty("--v", v);
     $(".gap", hubLabels[i]).style.display = a.id === weakest() ? "" : "none";
+    tweenNum($(".k-val", karneRows[i]), v);
+    $(".k-bar i", karneRows[i]).style.width = `${v}%`;
+    karneRows[i].classList.toggle("weak", a.id === weakest());
   });
+  leafLabels.forEach(({ el: node, i, j }) => { $("b", node).textContent = sub[AREAS[i].id][j]; });
   tweenNum($("[data-cscore]"), overall());
   $("[data-skill-table] tbody").innerHTML = AREAS.map((a) =>
-    `<tr><td>${a.name}</td><td>${scores[a.id]}</td><td>${FLOWS.filter(([, x]) => x === a.id).map(([p]) => PRODUCTS.find((q) => q.id === p).name).join(", ")}</td></tr>`).join("");
+    `<tr><td>${a.name} (${a.skills.map((s, j) => `${s} ${sub[a.id][j]}`).join(", ")})</td><td>${scores[a.id]}</td><td>${FLOWS.filter(([, x]) => x === a.id).map(([p]) => PRODUCTS.find((q) => q.id === p).name).join(", ")}</td></tr>`).join("");
 };
 
 function setStudent(s) {
-  student = s; scores = { ...s.areas }; bonus = 0; evIdx = 0;
+  student = s; sub = Object.fromEntries(Object.entries(s.sub).map(([k, v]) => [k, [...v]])); recompute(); evIdx = 0;
   $$("button", studentsEl).forEach((b, i) => b.setAttribute("aria-checked", String(STUDENTS[i] === s)));
   $("[data-cname]").textContent = s.name;
-  $("[data-profile]").textContent = s.profiles.join(" · ");
-  $("[data-advice]").textContent = s.advice[0];
-  $("[data-feed]").innerHTML = "";
+  $("[data-advice]").textContent = s.advice;
   renderScores();
+  selectArea(AREAS.findIndex((a) => a.id === weakest()));
   nextEvent = performance.now() + 900;
 }
 
-const feed = $("[data-feed]");
+const feed = $("[data-feed]");   // akış listesi kaldırıldı; darbeler ve puan artışı sürüyor
 const runEvent = () => {
-  const [pid, aid, inc, text] = student.events[evIdx++ % student.events.length];
+  const [pid, aid, li, inc, text] = student.events[evIdx++ % student.events.length];
   const pi = PRODUCTS.findIndex((p) => p.id === pid), ai = AREAS.findIndex((a) => a.id === aid);
   const area = AREAS[ai];
   const arrive = () => {
-    scores[aid] = Math.min(99, scores[aid] + inc);
-    bonus += inc;
+    sub[aid][li] = Math.min(99, sub[aid][li] + inc);
+    recompute();
     renderScores();
     hubLabels[ai].classList.remove("flash"); void hubLabels[ai].offsetWidth; hubLabels[ai].classList.add("flash");
-    const li = document.createElement("li");
-    li.innerHTML = `<span class="src">${PRODUCTS[pi].name}</span><span>${text}</span><b>+${inc} ${area.short}</b>`;
-    feed.prepend(li);
+    if (!feed) return;
+    const item = document.createElement("li");
+    item.innerHTML = `<span class="src">${PRODUCTS[pi].name}</span><span>${text}</span><b>+${inc} ${area.skills[li]}</b>`;
+    feed.prepend(item);
     while (feed.children.length > 2) feed.lastChild.remove();
   };
-  uni ? uni.pulse(pi, ai, arrive) : arrive();
+  uni ? uni.pulse(pi, ai, arrive, li) : arrive();
 };
 
 /* =========================================================
@@ -284,8 +311,7 @@ const frame = (now) => {
     show(coreLabel, e > 0.9 && k < 0.05);
     const graphOn = k > 0.9;
     const ctr = uni.project(A.center, W, H);
-    // alan rozeti kendi kümesinin ortasında; kalabalık olmasın diye alt beceriler yalnız
-    // üzerine gelinen alanda yazılır
+    // alan rozeti kendi kümesinin ortasında; kalabalık olmasın diye alt kırılımlar yalnız seçili alanda yazılır
     AREAS.forEach((_, i) => {
       const s = uni.project(A.hubs[i], W, H);
       place(hubLabels[i], s.x, s.y);
@@ -297,7 +323,7 @@ const frame = (now) => {
       const s = uni.project(A.leaves[i][j], W, H);
       const dx = s.x - ctr.x;
       place(node, s.x + (dx >= 0 ? 8 : -8), s.y + 10, dx >= 0 ? 0 : 1, 0);
-      show(node, graphOn && hoverArea === i);
+      show(node, graphOn && (hoverArea >= 0 ? hoverArea : selArea) === i);
     });
 
     // canlı veri: grafik tam oturunca, birkaç saniyede bir olay

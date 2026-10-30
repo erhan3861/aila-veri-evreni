@@ -1,5 +1,4 @@
-// AI-LA veri evreni — simülasyon verisi. Gerçek öğrenci verisi değildir; Elif'in rakamları
-// index.html'deki "Kendini Tanı" raporuyla aynıdır, diğer iki öğrenci aynı yapıda örnektir.
+// AI-LA veri evreni — simülasyon verisi. Gerçek öğrenci verisi değildir.
 
 export const PRODUCTS = [
   { id: "t14", name: "TALENT14", logo: "assets/talent14.png", desc: "Dijital beceri ve teknoloji eğitimi" },
@@ -7,96 +6,75 @@ export const PRODUCTS = [
   { id: "codemino", name: "Codemino", logo: "assets/codemino-logo.png", tall: true, desc: "Kodlama becerileri" },
   { id: "tc", name: "TALENT CUP", logo: "assets/talentcup-mark.png", desc: "Öğrenci yarışmaları ve projeler", mark: true },
   { id: "aig", name: "AI-GALAXY", logo: "assets/ai-galaxy.png", desc: "Yapay zekâ okuryazarlığı", mono: true },
-  { id: "dersmino", name: "Dersmino", logo: "assets/dersmino-logo.png", desc: "Kazanıma göre etkileşimli dersler", isNew: true },
+  // kurumun kullandığı içerik platformu (hangisi entegre olursa): markasız, yazıyla
+  { id: "icerik", name: "Dijital İçerik Platformu", label: true, desc: "Kurumunuzun içerik platformu" },
 ];
 
-// Altı yetkinlik alanı = rapordaki altı çubuk. Her alanın 2-3 alt becerisi grafikte yaprak düğümdür.
+// Altı beceri alanı: Türkiye Yüzyılı Maarif Modeli beceri çerçevesi (MEB, 2024). Her alanın 3 alt kırılımı
+// grafikte yaprak düğümdür; parantezdeki kodlar çerçevedeki kısaltmalar (kontrol için).
 // shape: renge ek olarak düğüm biçimi (renk tek başına anlam taşımasın)
 export const AREAS = [
-  { id: "arastirma", name: "Araştırma ve Keşif", short: "Araştırma", shape: "circle", skills: ["Soru sorma", "Kaynak tarama", "Hipotez kurma"] },
-  { id: "gorsel", name: "Görsel Üretim", short: "Görsel", shape: "diamond", skills: ["Prompt yazımı", "Kompozisyon", "Görsel hikâye"] },
-  { id: "akis", name: "Akış / Süreç Takibi", short: "Akış", shape: "square", skills: ["Adım planlama", "Görev sürekliliği"] },
-  { id: "okuma", name: "Eleştirel Okuma", short: "Okuma", shape: "triangle", skills: ["Çıkarım", "Ana fikir", "Okuma hızı"] },
-  { id: "olcme", name: "Ölçme-Değerlendirme", short: "Ölçme", shape: "hex", skills: ["Öz değerlendirme", "Hata analizi"] },
-  { id: "isbirligi", name: "İşbirliği ve Topluluk", short: "İşbirliği", shape: "ring", skills: ["Takım projesi", "Geri bildirim verme"] },
+  { id: "kavramsal", name: "Kavramsal Beceriler", short: "Kavramsal", shape: "circle",
+    skills: ["Temel beceriler", "Bütünleşik beceriler", "Üst düzey düşünme"] },              // KB1, KB2, KB3
+  { id: "alan", name: "Alan Becerileri", short: "Alan", shape: "diamond",
+    skills: ["Matematik", "Fen bilimleri", "Türkçe"] },                                     // derse özgü alan becerileri
+  { id: "egilim", name: "Eğilimler", short: "Eğilimler", shape: "square",
+    skills: ["Benlik eğilimleri", "Sosyal eğilimler", "Entelektüel eğilimler"] },           // E1, E2, E3
+  { id: "sdo", name: "Sosyal-Duygusal Öğrenme Becerileri", short: "Sosyal-Duygusal", shape: "triangle",
+    skills: ["Benlik", "Sosyal yaşam", "Ortak / uyum"] },                                   // SDB1, SDB2, SDB3
+  { id: "okuryazarlik", name: "Okuryazarlık Becerileri", short: "Okuryazarlık", shape: "hex",
+    skills: ["Bilgi okuryazarlığı", "Dijital okuryazarlık", "Görsel okuryazarlık"] },        // OB1, OB2, OB4
+  { id: "erdem", name: "Erdem-Değer-Eylem", short: "Erdem-Değer", shape: "ring",
+    skills: ["Sorumluluk", "Saygı", "Dürüstlük"] },                                         // değerlerden örnekler
 ];
 
-// Hangi platformun verisi hangi alanı besliyor (ekosistem → beceri haritası kenarları)
+// Hangi platformun verisi hangi beceriyi besliyor: [ürün, alan, alt kırılım sırası]
+// (ekosistem → beceri haritası kenarları ve canlı akış)
 export const FLOWS = [
-  ["t14", "arastirma"], ["t14", "akis"], ["t14", "olcme"],
-  ["okumino", "okuma"],
-  ["codemino", "akis"], ["codemino", "olcme"],
-  ["tc", "isbirligi"], ["tc", "gorsel"],
-  ["aig", "arastirma"], ["aig", "gorsel"],
-  ["dersmino", "arastirma"], ["dersmino", "olcme"],
+  ["t14", "kavramsal", 2], ["t14", "okuryazarlik", 1],
+  ["okumino", "okuryazarlik", 0], ["okumino", "kavramsal", 0],
+  ["codemino", "kavramsal", 2], ["codemino", "alan", 0],
+  ["tc", "sdo", 1], ["tc", "egilim", 1], ["tc", "erdem", 0],
+  ["aig", "okuryazarlik", 2], ["aig", "erdem", 2],
+  ["icerik", "alan", 1], ["icerik", "egilim", 2],
 ];
 
+// sub: her alanın 3 alt kırılımının puanı (alan puanı bunların ortalaması)
 export const STUDENTS = [
   {
     id: "elif", name: "Elif Y.", grade: "7. Sınıf", sources: 6, score: 84,
-    areas: { arastirma: 82, gorsel: 88, akis: 61, okuma: 58, olcme: 64, isbirligi: 76 },
-    profiles: ["Keşfederek öğrenen", "Görsel odaklı"],
-    signals: [
-      ["TALENT14", "Uygulamalı görevler güçlü; ileri seviye problem çözmede tekrar ihtiyacı var."],
-      ["Okumino", "Eleştirel okuma ve çıkarım adımlarında ek destek faydalı."],
-      ["AI-LA", "Chat yoğun, akış ve görev kullanımı düşük: yapılandırılmış öğrenme önerilir."],
-    ],
-    advice: [
-      "Serbest keşiften kısa, yapılandırılmış akışlara geçiş",
-      "Görsel içerikle başlayıp görev modülünde mikro uygulama",
-      "TALENT14 ve Okumino verisine göre çıkarım odaklı ölçme seti",
-    ],
-    // canlı akış: [ürün, alan, artış, olay]
+    sub: { kavramsal: [86, 82, 78], alan: [74, 88, 79], egilim: [82, 71, 90], sdo: [80, 82, 78], okuryazarlik: [62, 85, 89], erdem: [84, 80, 83] },
+    advice: "Okumino'da çıkarım ve kaynak karşılaştırma görevleriyle bilgi okuryazarlığını güçlendir.",
     events: [
-      ["okumino", "okuma", 2, "Çıkarım testi tamamlandı"],
-      ["t14", "akis", 1, "Akış görevi 3/4 adım"],
-      ["dersmino", "olcme", 1, "Fotosentez dersi: ara sorular tamam"],
-      ["codemino", "olcme", 2, "Hata ayıklama görevinde öz değerlendirme"],
-      ["tc", "isbirligi", 1, "Takım projesine katkı"],
-      ["aig", "arastirma", 1, "Modül 4: Kaynak doğrulama"],
+      ["okumino", "okuryazarlik", 0, 2, "Kaynak karşılaştırma görevi"],
+      ["t14", "kavramsal", 2, 1, "Problem çözme görevi 3/4 adım"],
+      ["icerik", "alan", 1, 1, "Fotosentez dersi: ara sorular tamam"],
+      ["codemino", "kavramsal", 2, 2, "Hata ayıklama görevi"],
+      ["tc", "sdo", 1, 1, "Takım projesine katkı"],
+      ["aig", "erdem", 2, 1, "Modül 4: Yapay zekâ ve dürüstlük"],
     ],
   },
   {
     id: "kerem", name: "Kerem A.", grade: "10. Sınıf", sources: 5, score: 79,
-    areas: { arastirma: 71, gorsel: 62, akis: 86, okuma: 74, olcme: 81, isbirligi: 58 },
-    profiles: ["Adım adım çalışan", "Geri bildirimle gelişen"],
-    signals: [
-      ["Codemino", "Algoritma görevlerinde istikrarlı; yeni kavramlarda örnek ihtiyacı var."],
-      ["TALENT CUP", "Takım içi rol alma düşük; bireysel teslimde güçlü."],
-      ["AI-LA", "Akış kullanımı yüksek: proje tabanlı ajanlara hazır."],
-    ],
-    advice: [
-      "Takım projelerinde dönüşümlü rol (sunucu, araştırmacı, tasarımcı)",
-      "Görsel üretim için kısa prompt alıştırmaları",
-      "Codemino ölçme setinden ileri seviye problem havuzu",
-    ],
+    sub: { kavramsal: [84, 88, 86], alan: [90, 77, 70], egilim: [80, 64, 85], sdo: [72, 58, 66], okuryazarlik: [78, 86, 70], erdem: [82, 74, 80] },
+    advice: "Talent Cup takım projelerinde dönüşümlü rol alarak sosyal yaşam becerilerini geliştir.",
     events: [
-      ["codemino", "akis", 1, "Döngüler modülü tamamlandı"],
-      ["tc", "isbirligi", 2, "Takım toplantısına katıldı"],
-      ["t14", "olcme", 1, "Haftalık değerlendirme"],
-      ["dersmino", "arastirma", 2, "Kimya dersi: deney adımı tamamlandı"],
-      ["okumino", "okuma", 1, "Okuma hızı +18 kelime/dk"],
+      ["codemino", "alan", 0, 1, "Döngüler modülü tamamlandı"],
+      ["tc", "sdo", 1, 2, "Takım toplantısına katıldı"],
+      ["t14", "okuryazarlik", 1, 1, "Dijital güvenlik görevi"],
+      ["icerik", "egilim", 2, 2, "Kimya dersi: deney sorusu üretti"],
+      ["okumino", "kavramsal", 0, 1, "Okuma hızı +18 kelime/dk"],
     ],
   },
   {
     id: "zeynep", name: "Zeynep K.", grade: "4. Sınıf", sources: 4, score: 77,
-    areas: { arastirma: 79, gorsel: 84, akis: 55, okuma: 66, olcme: 52, isbirligi: 83 },
-    profiles: ["Keşfederek öğrenen", "Geri bildirimle gelişen"],
-    signals: [
-      ["AI-GALAXY", "Yapay zekâ kavramlarını oyunlaştırılmış görevlerle hızlı öğreniyor."],
-      ["Okumino", "Okuma hızı yaş ortalamasında; ana fikirde destek faydalı."],
-      ["AI-LA", "Sınıf arkadaşlarıyla ortak görevlerde motivasyon yüksek."],
-    ],
-    advice: [
-      "Görsel hikâyeyle başlayan kısa okuma görevleri",
-      "Her görev sonunda iki soruluk öz değerlendirme",
-      "AI-GALAXY modüllerinde adım adım akış kartları",
-    ],
+    sub: { kavramsal: [72, 66, 60], alan: [64, 70, 78], egilim: [86, 84, 80], sdo: [82, 88, 79], okuryazarlik: [68, 74, 84], erdem: [80, 86, 78] },
+    advice: "İçerik platformundaki kısa adım adım derslerle üst düzey düşünme sorularına alış.",
     events: [
-      ["aig", "arastirma", 1, "Modül 2: Yapay zekâ nedir?"],
-      ["okumino", "okuma", 2, "Ana fikir alıştırması"],
-      ["tc", "isbirligi", 1, "Sınıf yarışmasına katıldı"],
-      ["dersmino", "olcme", 1, "Kesirler dersi: mini sınav"],
+      ["aig", "okuryazarlik", 2, 1, "Modül 2: Yapay zekâ nedir?"],
+      ["okumino", "okuryazarlik", 0, 2, "Ana fikir alıştırması"],
+      ["tc", "egilim", 1, 1, "Sınıf yarışmasına katıldı"],
+      ["icerik", "alan", 1, 1, "Kesirler dersi: mini sınav"],
     ],
   },
 ];

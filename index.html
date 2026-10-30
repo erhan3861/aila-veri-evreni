@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex" />
   <title>AI-LA · Okulunuzun kendi yapay zekâsı</title>
   <meta name="description" content="Okulunuzun markasıyla çalışan yapay zekâ ekosistemi: bağlı platformlardan gelen veriyle her öğrencinin beceri haritası." />
-  <meta name="robots" content="noindex" />
   <meta name="theme-color" content="#0b0a1c" />
   <link rel="icon" type="image/png" href="assets/aila-mark.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -124,18 +124,13 @@
     <!-- 3 · beceri haritası (Kendini Tanı) -->
     <div class="phase phase-graph" data-phase="graph">
       <div class="g-copy">
-        <p class="eyebrow">Kendini Tanı · Beceri haritası</p>
         <h2>AI-LA'nın en güçlü kası: bireyselleştirme.</h2>
         <div class="students" role="radiogroup" aria-label="Örnek öğrenci" data-students></div>
-        <!-- sade tutuldu: profil tek satır, tek öneri; platform sinyalleri sağ alttaki canlı akışta -->
-        <dl class="g-facts">
-          <div><dt>Öğrenme profili</dt><dd data-profile></dd></div>
-          <div class="g-advice"><dt>AI-LA önerisi</dt><dd data-advice></dd></div>
-        </dl>
+        <!-- beceri karnesi (Maarif Modeli'nin altı alanı): düz satırlar; satır seçilince grafikte alt kırılımlar açılır -->
+        <ul class="karne" role="listbox" aria-label="Beceri karnesi" data-karne></ul>
+        <p class="advice-line"><span>Öneri</span> <span data-advice></span></p>
       </div>
-      <div class="ticker" aria-live="polite" data-ticker><span class="live-dot" aria-hidden="true"></span><ul data-feed></ul></div>
       <table class="sr-only" data-skill-table><caption>Beceri haritası</caption><thead><tr><th>Alan</th><th>Puan</th><th>Besleyen platformlar</th></tr></thead><tbody></tbody></table>
-      <p class="sim-note">Simülasyon verisi · gerçek öğrenci verisi değildir</p>
     </div>
 
     <nav class="u-steps" aria-label="Hikâye adımları">
@@ -360,7 +355,7 @@
         </details>
         <details name="sss">
           <summary>AI-LA ekosisteminde hangi eğitim platformları bulunur?<svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg></summary>
-          <p>AI-LA ekosistemi farklı öğrenme ihtiyaçlarına yönelik uzmanlaşmış çözümler sunar. Talent14 dijital beceri ve teknoloji eğitimine, AI-GALAXY yapay zekâ okuryazarlığına, Codemino kodlama becerilerine, Okumino hızlı okuma çalışmalarına, TalentCup öğrenci yarışmalarına ve Dersmino kazanıma göre etkileşimli derslere odaklanır. Kurumlar ihtiyaç duydukları hizmetleri seçerek kendi ekosistemlerini oluşturabilir.</p>
+          <p>AI-LA ekosistemi farklı öğrenme ihtiyaçlarına yönelik uzmanlaşmış çözümler sunar. Talent14 dijital beceri ve teknoloji eğitimine, AI-GALAXY yapay zekâ okuryazarlığına, Codemino kodlama becerilerine, Okumino hızlı okuma çalışmalarına, TalentCup öğrenci yarışmalarına ve kurumunuzun kullandığı dijital içerik platformu da ekosisteme bağlanabilir. Kurumlar ihtiyaç duydukları hizmetleri seçerek kendi ekosistemlerini oluşturabilir.</p>
         </details>
         <details name="sss">
           <summary>Okulumuz AI-LA üzerinden kendi yarışmalarını düzenleyebilir mi?<svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg></summary>

@@ -7,7 +7,8 @@ const SLIDES = [
   { id: "okumino", img: "assets/carousel/okumino.jpg", alt: "Okumino: hızlı okuma egzersizi ve okuma hızı göstergesi", logo: "assets/okumino-logo.png", name: "Okumino", text: "Hızlı okuma ve anlama" },
   { id: "aigalaxy", img: "assets/carousel/ai-galaxy.jpg", alt: "AI-GALAXY: yapay zekâ üretim stüdyosu ve öğrenci çalışmaları", logo: "assets/ai-galaxy.png", mono: true, name: "AI-GALAXY", short: "Galaxy", text: "Yapay zekâ okuryazarlığı" },
   { id: "talentcup", img: "assets/carousel/talentcup.jpg", alt: "Talent Cup: görev patikası ve kupa", logo: "assets/talentcup-mark.png", tc: true, name: "Talent Cup", short: "Cup", text: "Öğrenci yarışmaları ve projeler" },
-  { id: "dersmino", img: "assets/carousel/dersmino.jpg", alt: "Dersmino: fotosentez dersi, ders anlatımı ve ara soru", logo: "assets/dersmino-logo.png", name: "Dersmino", text: "Kazanıma göre etkileşimli dersler", isNew: true },
+  // kurumun kullandığı içerik platformu hangisiyse o bağlanır; bu yüzden markasız, yazıyla
+  { id: "icerik", img: "assets/carousel/icerik.jpg", alt: "Dijital içerik platformu: fotosentez dersi ve ara soru", label: "Dijital İçerik Platformu", name: "Dijital İçerik Platformu", short: "İçerik", text: "Kurumunuzun içerik platformu" },
 ];
 const DUR = 4500;
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -26,8 +27,8 @@ export function mountCarousel(root) {
   root.setAttribute("role", "region");
   root.setAttribute("aria-roledescription", "karusel");
   root.setAttribute("aria-label", root.getAttribute("aria-label") || "Ekosistemden kareler");
-  const cap = (s) => (s.tc ? `<span class="pc-tc"><img src="${s.logo}" alt="">TALENT CUP</span>` : `<img class="pc-logo${s.mono ? " mono" : ""}" src="${s.logo}" alt="${s.name}">`)
-    + `<span>${s.text}</span>${s.isNew ? '<span class="pc-new">Yeni</span>' : ""}`;
+  const cap = (s) => (s.label ? `<span class="pc-tc">${s.label}</span>` : s.tc ? `<span class="pc-tc"><img src="${s.logo}" alt="">TALENT CUP</span>` : `<img class="pc-logo${s.mono ? " mono" : ""}" src="${s.logo}" alt="${s.name}">`)
+    + `<span>${s.text}</span>`;
   root.innerHTML = `
     <div class="pc-stage" aria-live="off">
       ${SLIDES.map((s, i) => `<figure class="pc-slide" id="${id}-s${i}" role="tabpanel" aria-roledescription="kare" aria-label="${i + 1} / ${SLIDES.length}: ${s.name}" data-pos="hidden">

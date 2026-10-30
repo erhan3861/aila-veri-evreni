@@ -219,7 +219,8 @@ export function createUniverse(canvas, { mobile }) {
     const cG = new Float32Array(N * 4), cE = new Float32Array(N * 4), cK = new Float32Array(N * 4);
     const sz = new Float32Array(N * 4), st = new Float32Array(N * 4);
     const white = hex("#eef1ff"), warm = hex("#fff1dc");
-    const flowsIdx = FLOWS.map(([p, a]) => [PRODUCTS.findIndex((x) => x.id === p), AREAS.findIndex((x) => x.id === a)]);
+    // [ürün, alan, alt kırılım]: platform verisi doğrudan alt beceriye akar (Maarif çerçevesi)
+    const flowsIdx = FLOWS.map(([p, a, l = 0]) => [PRODUCTS.findIndex((x) => x.id === p), AREAS.findIndex((x) => x.id === a), l]);
     const put = (arr, i, x, y, z) => { arr[i * 3] = x; arr[i * 3 + 1] = y; arr[i * 3 + 2] = z; };
     const putC = (arr, i, c, w) => { arr[i * 4] = c.r; arr[i * 4 + 1] = c.g; arr[i * 4 + 2] = c.b; arr[i * 4 + 3] = w; };
     const ball = (c, s) => [c.x + gauss(r) * s, c.y + gauss(r) * s, c.z + gauss(r) * s * 0.6];
@@ -251,7 +252,7 @@ export function createUniverse(canvas, { mobile }) {
         k = r() < 0.5 ? onLine(anchors.center, anchors.hubs[ai], 0.006) : onLine(anchors.hubs[ai], lf[Math.floor(r() * lf.length)], 0.004);
         kc = hex(AREA_COLORS[ai]).multiplyScalar(0.7); kw = 0; ks = 0.3 + r() * 0.25; }
       else if (z < 0.70) { const pi = Math.floor(r() * PRODUCTS.length); k = ball(anchors.prodK[pi], 0.06); kc = white; kw = 0.4; ks = 0.4 + r() * 0.6; }
-      else { const [pi, ai] = flowsIdx[Math.floor(r() * flowsIdx.length)]; const h = anchors.hubs[ai], p = anchors.prodK[pi];
+      else { const [pi, ai, li] = flowsIdx[Math.floor(r() * flowsIdx.length)]; const h = anchors.leaves[ai][li] || anchors.hubs[ai], p = anchors.prodK[pi];
         k = [h.x, h.y, h.z]; src = [p.x + gauss(r) * 0.03, p.y + gauss(r) * 0.03, p.z]; sp = 0.07 + r() * 0.09; kc = white; kw = 0.85; ks = 0.45 + r() * 0.4; }
       put(pK, i, ...k); putC(cK, i, kc, kw);
       sz[i * 4] = g.s; sz[i * 4 + 1] = es; sz[i * 4 + 2] = ks; sz[i * 4 + 3] = seed;
@@ -289,7 +290,7 @@ export function createUniverse(canvas, { mobile }) {
       seg(anchors.center, anchors.hubs[i], AREA_COLORS[i], 0.5);
       anchors.leaves[i].forEach((lf) => seg(anchors.hubs[i], lf, AREA_COLORS[i], 0.25));
     });
-    flowsIdx.forEach(([pi, ai]) => seg(anchors.prodK[pi], anchors.hubs[ai], "#ffffff", 0.09));
+    flowsIdx.forEach(([pi, ai, li]) => seg(anchors.prodK[pi], anchors.leaves[ai][li] || anchors.hubs[ai], "#ffffff", 0.09));
     graphLines.geometry.setAttribute("position", new THREE.Float32BufferAttribute(gp, 3));
     graphLines.geometry.setAttribute("color", new THREE.Float32BufferAttribute(gc, 3));
 
@@ -318,10 +319,10 @@ export function createUniverse(canvas, { mobile }) {
   // galaksi düzleminde bir noktanın dünya konumu (rol kartlarının yörüngesi için)
   const galPoint = (x, y) => new THREE.Vector3(x, y, 0).applyMatrix4(uniforms.uGal.value);
 
-  function pulse(pi, ai, onArrive) {
+  function pulse(pi, ai, onArrive, li = -1) {
     const slot = [...Array(PULSES).keys()].find((i) => !live.some((l) => l.i === i));
     if (slot === undefined) return;
-    live.push({ i: slot, from: anchors.prodK[pi], to: anchors.hubs[ai], t0: performance.now(), dur: 1400, onArrive });
+    live.push({ i: slot, from: anchors.prodK[pi], to: anchors.leaves[ai][li] || anchors.hubs[ai], t0: performance.now(), dur: 1400, onArrive });
   }
 
   function render(t, state) {
