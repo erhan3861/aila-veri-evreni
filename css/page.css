@@ -78,7 +78,7 @@ button { font: inherit; color: inherit; }
 /* =========================================================
    VERİ EVRENİ
    ========================================================= */
-.universe { position: relative; height: 720vh; background: var(--bg); }
+.universe { position: relative; height: 540vh; background: var(--bg); }
 .u-anchor { position: absolute; left: 0; width: 1px; height: 1px; }
 .u-sticky { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
 .u-sticky::after { /* evrenin dibinde sayfa zeminine yumuşak geçiş */
@@ -416,7 +416,7 @@ h1 { font-size: clamp(2.5rem, .9rem + 3.6vw, 4.5rem); font-weight: 800; letter-s
    DAR EKRAN
    ========================================================= */
 @media (max-width: 899px) {
-  .universe { height: 620vh; }
+  .universe { height: 470vh; }
   .hero-copy { left: 20px; right: 20px; top: 84px; width: auto; transform: none; }
   .hero-copy .lede, .hint, .actions .btn-ghost { display: none; }
   .domain { margin-bottom: 14px; }

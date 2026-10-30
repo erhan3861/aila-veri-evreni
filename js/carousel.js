@@ -10,7 +10,7 @@ const SLIDES = [
   // kurumun kullandığı içerik platformu hangisiyse o bağlanır; bu yüzden markasız, yazıyla
   { id: "icerik", img: "assets/carousel/icerik.jpg", alt: "Dijital içerik platformu: fotosentez dersi ve ara soru", label: "Dijital İçerik Platformu", name: "Dijital İçerik Platformu", short: "İçerik", text: "Kurumunuzun içerik platformu" },
 ];
-const DUR = 4500;
+const DUR = 2500;
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const ICON = {
   prev: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>',

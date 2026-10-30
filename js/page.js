@@ -273,8 +273,8 @@ const frame = (now) => {
   const dt = Math.min(0.05, (now - last) / 1000);
   last = now;
   readTarget();
-  // yumuşatılmış ilerleme: kaydırma bir yaya bağlı gibi takip edilir (scrub ~1 s)
-  prog = reduce ? target : prog + (target - prog) * (1 - Math.exp(-dt * 4.2));
+  // yumuşatılmış ilerleme: kaydırma bir yaya bağlı gibi takip edilir (scrub ~0.4 s)
+  prog = reduce ? target : prog + (target - prog) * (1 - Math.exp(-dt * 10));
   if (Math.abs(target - prog) < 1e-4) prog = target;
   const p = prog;
   const e = seg(p, 0.12, 0.34), k = seg(p, 0.48, 0.7);
