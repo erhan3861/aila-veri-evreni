@@ -144,7 +144,7 @@ const hubLabels = AREAS.map((a, i) => {
 const leafLabels = AREAS.flatMap((a, i) => a.skills.map((s, j) => ({ el: el("div", "lbl lbl-leaf", `${s} <b>0</b>`), i, j })));
 const centerLabel = el("div", "lbl lbl-center", `<strong data-cscore>0</strong><b data-cname></b>`);
 
-// alt kırılımlar yalnız bir alanda yazılır: karnede seçili alan (varsayılan: gelişim alanı); üzerine gelinen alan öne geçer
+// alt kırılımlar yalnız üzerine gelinen alanda yazılır (grafikteki rozet ya da karne satırı); fare çıkınca kapanır
 let hoverArea = -1, selArea = -1;
 hubLabels.forEach((h, i) => {
   h.addEventListener("pointerenter", () => { hoverArea = i; });
@@ -201,6 +201,10 @@ function selectArea(i, focus) {
 }
 karneRows.forEach((r, i) => {
   r.addEventListener("click", () => selectArea(i));
+  r.addEventListener("pointerenter", () => { hoverArea = i; });
+  r.addEventListener("pointerleave", () => { hoverArea = -1; });
+  r.addEventListener("focus", () => { hoverArea = i; });
+  r.addEventListener("blur", () => { hoverArea = -1; });
   r.addEventListener("keydown", (e) => {
     const to = { ArrowDown: i + 1, ArrowUp: i - 1, Home: 0, End: AREAS.length - 1 }[e.key];
     if (to !== undefined) { e.preventDefault(); selectArea((to + AREAS.length) % AREAS.length, true); }
@@ -323,7 +327,7 @@ const frame = (now) => {
       const s = uni.project(A.leaves[i][j], W, H);
       const dx = s.x - ctr.x;
       place(node, s.x + (dx >= 0 ? 8 : -8), s.y + 10, dx >= 0 ? 0 : 1, 0);
-      show(node, graphOn && (hoverArea >= 0 ? hoverArea : selArea) === i);
+      show(node, graphOn && hoverArea === i); // alt kırılımlar yalnız üzerine gelinen alanda; çıkınca kapanır
     });
 
     // canlı veri: grafik tam oturunca, birkaç saniyede bir olay

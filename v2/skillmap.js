@@ -56,6 +56,10 @@ export function mountSkillMap({ stage, canvas, labels, karne, advice, scoreEl, s
   }
   rows.forEach((r, i) => {
     r.addEventListener("click", () => selectArea(i));
+    r.addEventListener("pointerenter", () => { hoverArea = i; });
+    r.addEventListener("pointerleave", () => { hoverArea = -1; });
+    r.addEventListener("focus", () => { hoverArea = i; });
+    r.addEventListener("blur", () => { hoverArea = -1; });
     r.addEventListener("keydown", (e) => {
       const to = { ArrowDown: i + 1, ArrowUp: i - 1 }[e.key];
       if (to !== undefined) { e.preventDefault(); selectArea((to + AREAS.length) % AREAS.length, true); }
@@ -126,7 +130,7 @@ export function mountSkillMap({ stage, canvas, labels, karne, advice, scoreEl, s
       AREAS.forEach((_, i) => { const s = uni.project(A.hubs[i], W, H); place(hubLabels[i], s.x, s.y); });
       const ctr = uni.project(A.center, W, H);
       place(centerLabel, ctr.x, ctr.y);
-      const open = hoverArea >= 0 ? hoverArea : selArea;
+      const open = hoverArea; // alt kırılımlar yalnız üzerine gelinen alanda; çıkınca kapanır
       leafLabels.forEach(({ el: n, i, j }) => {
         const s = uni.project(A.leaves[i][j], W, H);
         const dx = s.x - ctr.x;
