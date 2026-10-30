@@ -100,15 +100,15 @@ $("[data-kt-bars]").innerHTML = [82, 80, 81, 80, 79, 82].map((v) => `<i style="-
 
 /* ---------- ekosistem ---------- */
 const ECO = [
-  { img: "talent14", logo: "assets/talent14.png", name: "Talent14", text: "Dijital beceri ve teknoloji eğitimi: patikalar, görevler, sertifikalar.", st: "Okuluna bağlı", feeds: "Kavramsal · Okuryazarlık" },
-  { img: "ai-galaxy", logo: "assets/ai-galaxy.png", mono: true, name: "AI-GALAXY", text: "Yapay zekâ okuryazarlığı modülleri ve üretim stüdyosu.", st: "Okuluna bağlı", feeds: "Okuryazarlık · Erdem-Değer" },
-  { img: "okumino", logo: "assets/okumino-logo.png", name: "Okumino", text: "Hızlı okuma ve anlama egzersizleri, seviyene göre.", st: "Okuluna bağlı", feeds: "Okuryazarlık · Kavramsal" },
-  { img: "codemino", logo: "assets/codemino-logo.png", name: "Codemino", text: "Oyun içinde blok kodlama görevleri.", st: "Okuluna bağlı", feeds: "Kavramsal · Alan" },
-  { img: "talentcup", logo: "assets/talentcup-mark.png", tc: true, name: "Talent Cup", text: "Öğrenci yarışmaları ve takım projeleri.", st: "Erişime açık", feeds: "Sosyal-Duygusal · Eğilimler" },
-  { img: "icerik", label: "Dijital İçerik Platformu", name: "Dijital İçerik Platformu", text: "Okulunun kullandığı ders içerikleri ve ara sorular.", st: "Erişime açık", feeds: "Alan · Eğilimler" },
+  { img: "talent14", logo: "assets/talent14.png", name: "Talent14", text: "Dijital beceri ve teknoloji eğitimi.", feeds: "Kavramsal · Okuryazarlık" },
+  { img: "ai-galaxy", logo: "assets/ai-galaxy.png", mono: true, name: "AI-GALAXY", text: "Yapay zekâ okuryazarlığı modülleri ve üretim stüdyosu.", feeds: "Okuryazarlık · Erdem-Değer" },
+  { img: "okumino", logo: "assets/okumino-logo.png", name: "Okumino", text: "Hızlı okuma ve anlama egzersizleri, seviyene göre.", feeds: "Okuryazarlık · Kavramsal" },
+  { img: "codemino", logo: "assets/codemino-logo.png", name: "Codemino", text: "Oyun içinde blok kodlama görevleri.", feeds: "Kavramsal · Alan" },
+  { img: "talentcup", logo: "assets/talentcup-mark.png", tc: true, name: "Talent Cup", text: "Öğrenci yarışmaları ve takım projeleri.", feeds: "Sosyal-Duygusal · Eğilimler" },
+  { img: "icerik", label: "Dijital İçerik Platformu", name: "Dijital İçerik Platformu", text: "Okulunun kullandığı ders içerikleri ve ara sorular.", feeds: "Alan · Eğilimler" },
 ];
 $("[data-eco]").innerHTML = ECO.map((p) => `<li><a class="eco" href="#">
-  <span class="eco-shot"><img src="assets/carousel/${p.img}.jpg" alt="" loading="lazy"><span class="eco-st">${p.st}</span></span>
+  <span class="eco-shot"><img src="assets/carousel/${p.img}.jpg" alt="" loading="lazy"></span>
   <span class="eco-body">
     <span class="eco-logo">${p.label ? `<b class="eco-word">${p.label}</b>` : p.tc ? `<span class="eco-tc"><img src="${p.logo}" alt="">TALENT CUP</span>` : `<img src="${p.logo}" alt="${p.name}"${p.mono ? ' class="mono"' : ""}>`}</span>
     <span class="eco-text">${p.text}</span>
