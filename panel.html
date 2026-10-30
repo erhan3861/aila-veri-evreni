@@ -11,7 +11,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/panel.css" />
-  <script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/" } }</script>
   <script type="module" src="js/panel.js"></script>
 </head>
 <body>
@@ -85,13 +84,15 @@
     <!-- ana sayfa -->
     <div class="view home" data-view="ana">
       <main class="main">
-        <section class="hero" aria-labelledby="hero-h">
-          <div class="hero-copy">
-            <h1 id="hero-h">AI-LA’ya <span>hoş geldin</span></h1>
-            <p>Fikirlerini yapay zekâ ile geliştir, projelerini adım adım gerçeğe dönüştür.</p>
-            <a class="cta" href="#araclar"><svg class="icon" aria-hidden="true"><use href="#i-spark" /></svg>Hemen Başla<svg class="icon" aria-hidden="true"><use href="#i-arrow" /></svg></a>
+        <!-- bu hafta: içerik js/hafta.js'ten; görevler, yarışma, haftanın projesi, iki üretim, ilham -->
+        <section class="hero week" aria-roledescription="karusel" aria-label="Bu hafta" data-week>
+          <h1 class="sr-only">Ana sayfa</h1>
+          <div class="slides" data-slides aria-live="off"></div>
+          <div class="week-nav">
+            <div class="dots" role="tablist" aria-label="Slaytlar" data-dots></div>
+            <button type="button" class="wk-btn" aria-label="Önceki" data-prev><svg class="icon" aria-hidden="true"><use href="#i-arrow" /></svg></button>
+            <button type="button" class="wk-btn" aria-label="Sonraki" data-next><svg class="icon" aria-hidden="true"><use href="#i-arrow" /></svg></button>
           </div>
-          <canvas class="hero-3d" data-crystal aria-hidden="true"></canvas>
         </section>
         <section class="tools" aria-labelledby="tools-h">
           <div class="head"><h2 id="tools-h">Öne Çıkan Araçlar</h2><a href="#araclar">Tümünü Gör<svg class="icon" aria-hidden="true"><use href="#i-arrow" /></svg></a></div>
@@ -116,6 +117,12 @@
         </a>
       </aside>
     </div>
+
+    <!-- görev ayrıntısı: #gorev/<id>, karuseldeki görevlerden açılır -->
+    <section class="view page task" data-view="gorev" aria-labelledby="gorev-h" hidden>
+      <a class="back" href="#ana"><svg class="icon" aria-hidden="true"><use href="#i-arrow" /></svg>Ana sayfa</a>
+      <div class="task-card" data-task></div>
+    </section>
 
     <!-- araçlar -->
     <section class="view page fit" data-view="araclar" aria-labelledby="araclar-h" hidden>

@@ -1,7 +1,6 @@
 // AI-LA paneli (login sonrası). Renk: panel.html?renk=turkuaz|mor|turuncu|deniz (varsayılan mavi). Rol login'den gelir; demoda ?rol=ogretmen|yonetici
-import * as THREE from "three";
-import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import { hexToOklch, oklchToHex } from "./oklch.js";
+import { mountWeek, renderTask } from "./week.js";
 
 const $ = (s, r = document) => r.querySelector(s);
 
@@ -157,15 +156,20 @@ $("[data-feed]").addEventListener("click", (e) => {
 });
 $("[data-top]").innerHTML = FEED.slice(0, 4).map((f, i) => `<li><span class="rank">${i + 1}</span>${thumb(f, "top-shot")}<span class="top-text"><strong>${f.t}</strong><span>${f.who} · ${f.likes} beğeni</span></span></li>`).join("");
 
+/* ---------- bu hafta karuseli ---------- */
+const week = mountWeek($("[data-week]"));
+
 /* ---------- sayfalar: menü adresle (#araclar …) değişir, sayfa yeniden yüklenmez ---------- */
 let view = "ana", skillMap = null;
 const VIEWS = $$("[data-view]").map((v) => v.dataset.view);
 const go = () => {
-  const h = location.hash.slice(1);
+  const [h, arg] = location.hash.slice(1).split("/");
   view = VIEWS.includes(h) ? h : "ana";
+  if (view === "gorev" && !renderTask($("[data-task]"), decodeURIComponent(arg || ""))) view = "ana";
   $$("[data-view]").forEach((v) => { v.hidden = v.dataset.view !== view; });
   $$("[data-nav]").forEach((a) => { if (a.dataset.nav === view) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
-  document.title = `${$(`[data-nav="${view}"]`).textContent.trim()} · AI-LA`;
+  document.title = `${view === "gorev" ? $("#gorev-h").textContent : $(`[data-nav="${view}"]`).textContent.trim()} · AI-LA`;
+  week.active(view === "ana");
   if (view === "kendini-tani") {
     if (!skillMap) {
       import("./skillmap.js").then(({ mountSkillMap }) => {
@@ -191,98 +195,3 @@ sideBtn.addEventListener("click", () => {
   setSide(c);
   try { localStorage.setItem("aila-side", c ? "dar" : "genis"); } catch (e) { /* yok say */ }
 });
-
-/* ---------- karşılama nesnesi: cam küre içinde kristal ve iki ince halka ---------- */
-const canvas = $("[data-crystal]");
-const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-try {
-  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.05;
-  const scene = new THREE.Scene();
-  const pmrem = new THREE.PMREMGenerator(renderer);
-  scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
-  const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 50);
-  camera.position.set(0, 0.2, 9);
-
-  const sCol = new THREE.Color(c), vCol = new THREE.Color(vio);
-  const rig = new THREE.Group();
-  scene.add(rig);
-
-  // kristal: düz yüzlü, okul renginden mora yüz yüz değişen ton
-  const geo = new THREE.IcosahedronGeometry(1.15, 0).toNonIndexed();
-  geo.scale(1, 1.22, 1);
-  const col = [], tmp = new THREE.Color();
-  for (let f = 0; f < geo.attributes.position.count / 3; f++) {
-    const y = (geo.attributes.position.getY(f * 3) + geo.attributes.position.getY(f * 3 + 1) + geo.attributes.position.getY(f * 3 + 2)) / 3;
-    tmp.copy(sCol).lerp(vCol, THREE.MathUtils.clamp(0.5 - y * 0.45 + (f % 3) * 0.08, 0, 1)).lerp(new THREE.Color("#ffffff"), (f % 4) * 0.07);
-    for (let k = 0; k < 3; k++) col.push(tmp.r, tmp.g, tmp.b);
-  }
-  geo.setAttribute("color", new THREE.Float32BufferAttribute(col, 3));
-  geo.computeVertexNormals();
-  const crystal = new THREE.Mesh(geo, new THREE.MeshPhysicalMaterial({
-    vertexColors: true, flatShading: true, roughness: 0.12, metalness: 0.05, clearcoat: 1, clearcoatRoughness: 0.08,
-    iridescence: 0.6, iridescenceIOR: 1.4, transparent: true, opacity: 0.94, envMapIntensity: 1.3,
-  }));
-  rig.add(crystal);
-
-  // cam kabuk: içi görünsün diye ince, kenarda parlayan
-  const shell = new THREE.Mesh(new THREE.SphereGeometry(2.05, 96, 64), new THREE.MeshPhysicalMaterial({
-    color: 0xffffff, roughness: 0.04, metalness: 0, clearcoat: 1, iridescence: 1, iridescenceIOR: 1.3,
-    transparent: true, opacity: 0.16, depthWrite: false, envMapIntensity: 1.6, side: THREE.FrontSide,
-  }));
-  rig.add(shell);
-  // kenar ışığı: kabuğun kenarlarını açan fresnel katman
-  const rim = new THREE.Mesh(new THREE.SphereGeometry(2.06, 96, 64), new THREE.ShaderMaterial({
-    transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
-    uniforms: { uCol: { value: vCol.clone().lerp(new THREE.Color("#ffffff"), 0.35) } },
-    vertexShader: "varying vec3 vN; varying vec3 vV; void main(){ vec4 mv = modelViewMatrix * vec4(position,1.); vN = normalize(normalMatrix*normal); vV = normalize(-mv.xyz); gl_Position = projectionMatrix*mv; }",
-    fragmentShader: "uniform vec3 uCol; varying vec3 vN; varying vec3 vV; void main(){ float f = pow(1.-max(dot(vN,vV),0.),3.); gl_FragColor = vec4(uCol*f*.9, f*.9); }",
-  }));
-  rig.add(rim);
-
-  const ringMat = new THREE.MeshPhysicalMaterial({ color: vCol.clone().lerp(new THREE.Color("#ffffff"), 0.55), roughness: 0.1, clearcoat: 1, iridescence: 1, transparent: true, opacity: 0.75, envMapIntensity: 1.4 });
-  const ring1 = new THREE.Mesh(new THREE.TorusGeometry(2.55, 0.022, 16, 240), ringMat);
-  ring1.rotation.set(1.2, 0.35, 0.2);
-  const ring2 = new THREE.Mesh(new THREE.TorusGeometry(2.85, 0.012, 12, 240), ringMat.clone());
-  ring2.material.opacity = 0.45;
-  ring2.rotation.set(1.35, -0.3, -0.25);
-  scene.add(ring1, ring2);
-
-  const key = new THREE.DirectionalLight(0xffffff, 1.6); key.position.set(3, 4, 5); scene.add(key);
-  const fill = new THREE.DirectionalLight(vCol, 0.8); fill.position.set(-4, -2, 2); scene.add(fill);
-
-  const resize = () => {
-    const w = canvas.clientWidth, h = canvas.clientHeight;
-    if (!w || !h) return;
-    renderer.setSize(w, h, false);
-    camera.aspect = w / h;
-    // nesne yüksekliğe sığsın: küçük kartta da halkalar kesilmesin
-    camera.position.z = Math.max(10.5, 9.6 / Math.min(1, camera.aspect));
-    camera.updateProjectionMatrix();
-    if (reduce) draw(4000); // hareketsiz modda boyut değişince kare yeniden çizilir
-  };
-
-  let px = 0, py = 0, visible = true, raf = 0;
-  addEventListener("pointermove", (e) => { px = e.clientX / innerWidth - 0.5; py = e.clientY / innerHeight - 0.5; });
-  const draw = (t) => {
-    const s = t / 1000;
-    crystal.rotation.y = s * 0.35; crystal.rotation.x = Math.sin(s * 0.4) * 0.12;
-    ring1.rotation.z = 0.2 + s * 0.12; ring2.rotation.z = -0.25 - s * 0.08;
-    rig.position.y = Math.sin(s * 0.8) * 0.06;
-    scene.rotation.y += (px * 0.25 - scene.rotation.y) * 0.05;
-    scene.rotation.x += (py * 0.15 - scene.rotation.x) * 0.05;
-    renderer.render(scene, camera);
-  };
-  new ResizeObserver(resize).observe(canvas);
-  resize();
-  const loop = (t) => { raf = 0; draw(t); if (visible && !document.hidden) raf = requestAnimationFrame(loop); };
-  if (reduce) draw(4000);
-  else {
-    new IntersectionObserver(([en]) => { visible = en.isIntersecting; if (visible && !raf) raf = requestAnimationFrame(loop); }).observe(canvas);
-    document.addEventListener("visibilitychange", () => { if (!document.hidden && visible && !raf) raf = requestAnimationFrame(loop); });
-  }
-} catch (e) {
-  canvas.remove(); // WebGL yoksa karşılama yalnız metinle kalır
-}
